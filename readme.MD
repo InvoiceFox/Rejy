@@ -80,7 +80,35 @@ The pipe trick ... if we make evaluator with infixed operators and opwords as pl
 Definition of object with spec. Spec can have tag and validation, spec if bound to tag and can't be changed. Produces an error on collision.
 
 
+## Implementation
 
+Currently, each value in Rejy is small JS Array. First value is integer type, second is value, third and so on are optional.
+```
+{ word: 2 { janko } } turns to
+
+[
+   1,
+   [
+      13,
+      "word"
+   ],
+   [
+      101,
+      2
+   ],
+   [
+      1,
+      [
+         11,
+         "dog"
+      ],
+      [
+         14,
+         "woof"
+      ]
+   ]
+]
+```
 ### Objects and modules - FAILED
 
 * Objects have a lookup list, list ob object prototypes where words are looked-up, if not found in current object.
@@ -111,3 +139,4 @@ additional spec types.
     }
 
 **FAIL ... we don't want to use "object/method args" code at all ... basically we just want data tuples and multimethods**
+
