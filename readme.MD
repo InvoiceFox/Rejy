@@ -82,33 +82,31 @@ Definition of object with spec. Spec can have tag and validation, spec if bound 
 
 ## Implementation
 
+### Representation of Rejy nodes in JS
+
 Currently, each value in Rejy is small JS Array. First value is integer type, second is value, third and so on are optional.
 ```
-{ word: 2 { janko } } turns to
+{ word: 2 { janko } } // turns to
 
-[
-   1,
-   [
-      13,
-      "word"
-   ],
-   [
-      101,
-      2
-   ],
-   [
-      1,
-      [
-         11,
-         "dog"
-      ],
-      [
-         14,
-         "woof"
-      ]
+[ 1, // block
+   [ 13, "word" ], // setword
+   [ 101, 2 ],     // 
+   [ 1,
+      [ 11, "dog" ],
+      [ 14, "woof" ]
    ]
 ]
 ```
+
+### Internal representation of values
+
+Problem: Some of functions we have now in Rejy work directly on unboxed JS values, for speed and simplicity purposes, but the AST Nodes aren't like that. 
+* Solution would be that we would use direct JS values for Native types in AST. String, Number, Int .. what about arrays and objects? ... and are there any benefits of these two not being different syntactically in Rejy too? Object is not really series and functions on series don't really make sense on it or even work ... ? _ ? Minus is that then we don't have only series there
+* Another solutio is that we transfer from AST to interpreter values and back (get AST, turn to array/object, manipulate in JS and return as AST Nodes again)
+* Don't know what makes more sense ... maybe we try both.
+
+## Failed
+
 ### Objects and modules - FAILED
 
 * Objects have a lookup list, list ob object prototypes where words are looked-up, if not found in current object.
