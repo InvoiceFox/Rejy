@@ -6,10 +6,18 @@ I am writing down ideas about language design, as they come, here.
 
 * First of all, it's a **experimental** or **toy** language made by amateur language designer
 * A language that **looks** a little more familiar to general developers, but is 100% REBOL-like blocks (three legged stool poem)
-* Simple prototype inspired object model (no classes - for now no methods)
-* Multimethods - tags - validations 
-* Hopefully stronger functional leaning
-* Homoiconic (code and data are words, values and blocks all the way ... no keywords, no special forms)
+
+### Trying to achieve
+* rebol like blocks, words and values all the way down - NP
+* advanced simple and safe objects with tags, prototypes (delegates) validators, transformators and multimethods - OK
+* Multimethods on tags and natives - OK
+* User definable opwords (infix words) - TRY
+
+### Unresolved
+* Scopes, isolation, pure-functions? read only outer access?? (can it be read only? if funcs aren't pure??)
+* Pure funcs that cal only call pure funcs?
+* Modules?
+* Recursion? Trampoline?
 
 ### Hail to the block (of code or data)
 
@@ -54,6 +62,11 @@ We can create object with a spec. Spec can include prototype object (instance - 
     
 Here we have to decide, if we go for sorts of declarable (safer), but then const enviroments, or do we fully manipulate environments at runtime. Is the first the point or the second???
     
+    +: multi { !number n m } { add n m }
+    +: multi { !string s t } { join n m }
+   
+Multimethods should also work on opwords and native types.
+
     
 ### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
@@ -68,7 +81,7 @@ Definition of object with spec. Spec can have tag and validation, spec if bound 
 
 
 
-### Objects and modules
+### Objects and modules - FAILED
 
 * Objects have a lookup list, list ob object prototypes where words are looked-up, if not found in current object.
 * Modules have the same need of lookup, they usually lookup into modules they import. So here Modules are exactly just objects
