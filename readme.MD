@@ -50,21 +50,21 @@ We can create object with a spec. Spec can include prototype object (instance - 
     
     calc-age: multi { 'person person } { age: sub now|year person/birth|year } // | now|year => (year (now)) (pipe)
     
-    calc-age: multi { 'person person } { age: sub now | year person/birth | year } 
+    calc-age: multi { 'person person } { age: sub now | year person/birth | year }
+    
+Here we have to decide, if we go for sorts of declarable (safer), but then const enviroments, or do we fully manipulate environments at runtime. Is the first the point or the second???
+    
+    
+### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
     
 The pipe trick ... if we make evaluator with infixed operators and opwords as planned then this should be no special problem either.
 
-    customer/name|to-uppercase|limit-length 10
+    customer/name|to-uppercase | limit-length 10
     
-    person/birth | year | to-string | wrap "***"
-
-
+    person/birth|year|to-string|wrap "***"|print
 
 Definition of object with spec. Spec can have tag and validation, spec if bound to tag and can't be changed. Produces an error on collision.
-
-    buyer: object { 'person name: required and string age: optional 0 and integer }
-              { name: "Janko" }
 
 
 
