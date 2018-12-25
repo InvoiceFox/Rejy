@@ -30,10 +30,10 @@ specific types of words (setwords), that have specific behaviour in the **do** d
   with same functionality
 
 
-    jim: tuple {
-        name: "Jim"
-        age: 30
-    }
+```jim: tuple {
+   name: "Jim"
+   age: 30
+}```
 
 *tuple* is a function that creates object without spec, *object* is a function that creates object with spec also. Spec has it's 
 own spec dialect. If it's just list of words it means these are lookup objects. With a little help from setwords you can add
