@@ -30,7 +30,8 @@ specific types of words (setwords), that have specific behaviour in the **do** d
   with same functionality
 
 
-```jim: tuple {
+```
+jim: tuple {
    name: "Jim"
    age: 30
 }
