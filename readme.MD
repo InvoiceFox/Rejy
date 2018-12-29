@@ -67,6 +67,35 @@ Here we have to decide, if we go for sorts of declarable (safer), but then const
    
 Multimethods should also work on opwords and native types.
 
+### Infix notation - opwords
+
+#### Why and how
+
+We want the posible beautiful composibility and clarity of infix notation. We want infix notation to be the first class citizen.
+There should be infix natives, native multimethods and infix user functions. Infix is nice and beautiful, but it has to be visually obvious to the reader of code without always knowing specific word in specific context. For this reason only opwords can be infix and opwors are or start with one of the typical infix operators (+ - * & > < ...)
+
+#### Some examples
+
+Math expressions are obvious:
+
+    1 + 2          // 3
+    5 * 10         // 50
+    20 > 10        // true
+    100 + 20 - 50  // 80
+
+Opwords can be more than operators
+    
+    { 1 } +append 2            // { 1 2 }
+    "janko" +join _ "metelko"  // "janko metelko"
+    
+Since they are multimethods they can also be ordinary operators:
+    
+    "janko" + " " + "metelko"   // "janko metelko"
+    
+What about piping of functions and postfix with one operator (see language like K and APL .... for examples) ... 
+This is something we need to think - test - look 
+
+    http://wwww.cebelca.biz |read |get-title |uppercase |print 
     
 ### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
