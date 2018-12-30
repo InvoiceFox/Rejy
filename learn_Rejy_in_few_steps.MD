@@ -77,7 +77,7 @@ Words hold references to values. Functions are also values. Set-word takes the v
     second { "apple" "orange" }                         // returns "orange"
     do append { print } second { "apple" "lemon" }      // prints "lemon"
 
-DO dialect has no keywords or special forms. Things like **if**, **loop**, **for** are just ordinary funtions, you can make your own specialised version withouth problem.
+DO dialect has no keywords or special forms. Things like **if**, **loop**, **for** are just ordinary functions. You can make your own specialised versions without breaking any sweat.
 
     if greater? 10 5 { print "Woof!" } // prints "Woof!"
     
@@ -93,7 +93,7 @@ DO dialect has no keywords or special forms. Things like **if**, **loop**, **for
     Why Sweat
     Why Hasksaw
    
-**if** for example, is just a function that accepts two arguments: a boolean (true / false) and a block of code to execute if the first argument is true. There is no special form for all this either. Look at these:
+**if** for example, is a function that accepts two arguments: a boolean (true / false) and a block of code to execute if the first argument is true. For is similar:
 
     just-a-block: { print "Woof!" }     // we assign the block to a word just-a-block
     if greater? 10 5 just-a-block       // prints "Woof!"
@@ -104,5 +104,6 @@ DO dialect has no keywords or special forms. Things like **if**, **loop**, **for
     Why Sweat
     Why Hasksaw
     
+ 
  ***... work in progress ...***
     
