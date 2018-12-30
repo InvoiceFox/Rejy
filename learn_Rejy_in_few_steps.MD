@@ -6,7 +6,7 @@
 
 Rejy is an experimental language. I took the basic idea of Rebol, made it visually closer for most programmers and am extending it in some new ways to see where it leads. 
 
-Current implementation is an interpreter in JavaScript. Dart or JVM interpreter is in plans IF it shows worthy. Contrary to Re(db)ols, the practical focus is on backend / console programming / IO, not the GUI-s.
+Current implementation is an interpreter in JavaScript. Dart or JVM interpreter is in plans IF it shows worthy. Contrary to Re(db)ols, the practical focus will be on backend / console programming / IO, not the GUI-s.
 
 Here you can see some similar (more developed) languages of this ilk:
     www.rebol.com (Rebol 2 - closed source - FOA)
