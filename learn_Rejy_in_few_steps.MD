@@ -1,6 +1,8 @@
 ## Learning about Rejy
 
-*this document tries to explain what and why to people not familiar with Re(db)ol languages*
+
+    *this document tries to explain what and why to people not familiar with Re(db)ol languages*
+
 
 Rejy is an experimental language. I took the basic idea of Rebol, made it visually closer for most programmers and am extending it in some new ways to see where it leads. 
 
@@ -101,4 +103,6 @@ DO dialect has no keywords or special forms. Things like **if**, **loop**, **for
     Why Tilly
     Why Sweat
     Why Hasksaw
+    
+ ***... work in progress ...***
     
