@@ -1,4 +1,4 @@
-## Learning about Rejy
+## Rejy basics
 
 
     *this document tries to explain what and why to people not familiar with Re(db)ol languages*
@@ -15,7 +15,7 @@ Here you can see some similar (more developed) languages of this ilk:
 
 Rejy is a dynamic, fully homoiconic `toy` language. Lisp met forth in a dark alley and lost the parenthesis and the stack shuffle words.
 
-### Blocks, words, literal values
+### Blocks, words and values
 
 Everything in Rejy resides in blocks:
 
@@ -71,13 +71,13 @@ Words hold references to values. Functions are also values. Set-word takes the v
                                 // the value to word surname
     print surname               // prints "The Kid"
 
-**Quirky** Blocks with the DO dialect code are no different than blocks with other data. Rejy has many functions that help you work with blocks.
+Blocks with the DO dialect code are no different than blocks with other data. Rejy has many functions that help you work with blocks.
  
     append { "apple" "orange" } "lemon"                 // returns { "apple" "orange" "lemon" }
     second { "apple" "orange" }                         // returns "orange"
     do append { print } second { "apple" "lemon" }      // prints "lemon"
 
-DO dialect has no keywords or special forms. Things like **if**, **loop**, **for** are just ordinary functions. You can make your own specialised versions without breaking any sweat.
+DO dialect has no keywords or special forms. Things like **if**, **loop**, **for** are just ordinary functions.
 
     if greater? 10 5 { print "Woof!" } // prints "Woof!"
     
@@ -87,23 +87,25 @@ DO dialect has no keywords or special forms. Things like **if**, **loop**, **for
     *
     *
     
-    for person in { 'Tilly 'Sweat 'Hasksaw } { print join "Why " person }
+    for person in { 'Tilly 'Sweat 'Hacksaw } { print join "Why " person }
     // prints
     Why Tilly
     Why Sweat
-    Why Hasksaw
+    Why Hacksaw
    
-**if** for example, is a function that accepts two arguments: a boolean (true / false) and a block of code to execute if the first argument is true. For is similar:
+**if** for example, is just a function that accepts two arguments: a boolean and a block of code to execute if the first argument is true. For is similar:
 
     just-a-block: { print "Woof!" }     // we assign the block to a word just-a-block
     if greater? 10 5 just-a-block       // prints "Woof!"
     
-    for person in { 'Tilly 'Sweat 'Hasksaw } append { print join } { "Why " person }
+    for person in { 'Tilly 'Sweat 'Hacksaw } append { print join } { "Why " person }
     // prints
     Why Tilly
     Why Sweat
-    Why Hasksaw
+    Why Hacksaw
     
- 
+
+
+
  ***... work in progress ...***
     
