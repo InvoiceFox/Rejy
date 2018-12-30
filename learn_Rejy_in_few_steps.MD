@@ -9,9 +9,9 @@ Rejy is an experimental language. I took the basic idea of Rebol, made it visual
 Current implementation is an interpreter in JavaScript. Dart or JVM interpreter is in plans IF it shows worthy. Contrary to Re(db)ols, the practical focus will be on backend / console programming / IO, not the GUI-s.
 
 Here you can see some similar (more developed) languages of this ilk:
-    www.rebol.com (Rebol 2 - closed source - FOA)
-    www.red-lang.com
-    https://github.com/metaeducation/ren-c
+  *  www.rebol.com (Rebol 2 - closed source language that started it all)
+  *  www.red-lang.com
+  *  https://github.com/metaeducation/ren-c 
 
 Rejy is a dynamic, fully homoiconic `toy` language. Lisp met forth in a dark alley and lost the parenthesis and the stack shuffle words.
 
