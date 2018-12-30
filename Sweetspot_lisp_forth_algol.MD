@@ -1,24 +1,23 @@
-# Is there a sweetspot between lisp, forth and algol (c, java) languages?
+# lisp, forth and algol
 
-    This is horribly pretentious text. I am aware of that, you reader - please be aware of that too. 
-    Who am I to criticise these language families - **nobody**. But I can still write it, and by putting it in text
-    test if there is something there for me at least.
-
-Maybe all of these great language families can teach us something with their approach. 
+    This could be horribly pretentious text. I am aware of that, you reader - please be aware of that too.
+    I am nobody, but I can still type, and you can ignore ...
 
 # Line noise
 
-Let's say each of these languages attacks one kind of line noise and introduces another.
+Let's say each of these languages removes one kind of line noise and introduces another.
 
 ### FORTH - Concatenative languages
 
-PRO: these languages reject **variable names**. Because values are put and taken from the stack, they don't need them.
-And many times, the flow of information is really well represented by them.
+PRO: these languages reject **variable names**. And many times variables are just noise that trashes the flow on logic.
 
-    
+CONS: the language introduces stack shuffling words, which is even bigger line noise.
 
-CONS: 
-represented by 
+PRO: to battle the line noise via shuffle words, some cool concepts were invented (look at factorcode.com)
+
+CONS: but stack shuffling words are still there and noisy
+
+### LISPS - homoiconic list based languages
 
 
 
