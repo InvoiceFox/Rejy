@@ -1,55 +1,77 @@
-## Learn Rejy in few steps
+## Learning about Rejy
+
+Rejy is an experimental language. I took the basic idea of Rebol, made it visually closer for most programmers and am extending it in some new ways to see where it leads. 
+
+Current implementation is an interpreter in JavaScript. Dart or JVM interpreter is in plans IF it shows worthy. Contrary to Re(db)ols, the practical focus is on backend / console programming / IO, not the GUI-s.
+
+Here you can see some similar (more developed) languages of this ilk:
+    www.rebol.com (Rebol 2 - closed source - FOA)
+    www.red-lang.com
+    https://github.com/metaeducation/ren-c
+
+Rejy is a dynamic, fully homoiconic `toy` language. Lisp met forth in a dark alley and lost the parenthesis and the stack shuffle words.
 
 ### Blocks, words, literal values
 
-Rejy understands blocks
+Everything in Rejy resides in blocks:
 
     { 1 2 "three" }
     { some words }
-    { prind 10 }
+    { print 10 }
     
-Inside the blocks there can be words and literal values.
+Inside the **blocks**, there can be **words** and **values**.
 
-Rejy knows few different types of words. Let's met the first two:
+Rejy knows few different types of words. Let's met the first few:
 
-    a-word // an ordinary word
-    setword: // a set-word
-    'lit-word  // literal word
+    a-word      // an ordinary word
+    setword:    // a set-word
+    'lit-word   // literal word
+    +           // opword
     
 Rejy knows many types of literal values:
 
-    123 2.512 // numbers
-    "some text" // strings
-    http://www.cebelca.biz // urls
+    123 2.512               // numbers
+    "some text"             // string
+    http://www.cebelca.biz  // url TODO
+    support@example.com     // email TODO
+    %/path/to/file          // path TODO
     ...
     
-So let's see few example blocks:
+These are few examples of Rejy blocks:
 
     { 'Tilly 'Sweat 'Hacksaw }
     { name: "Fifi" sound: "Woof" age: 5 }
-    { walk the dog in 10 minutes }
-    { load http://www.google.com and get 'title }
+    { url http://usrjoy.com last-check 2018-12-30T20:21:00 }
+    { ping me about "appointment with Jim" in 10 minutes }
+    { page: load http://www.google.com print get-title page }
     { root { branch1 {} branch2 { sub-branch1 } } }
+
+If you look - some of these look like data some like code and both claims are correct.
 
 ### The DO dialect
 
-Rejy blocks can hold any mix of words and values, but some subset makes sense to the DO dialect. Do dialect is what could be called the default programming language of Rejy, but there can be others. 
+DO dialect takes block of words and values and executes - or **does** it. DO dialect is the default programming language/dialect in Rejy. Words like **join**, **print** are functions that accept fixed number of arguments. **do** itself is a function.
 
-    do { "Tilly" } // return "Tilly"
+    do { "Tilly" }                      // returns "Tilly"
+    do { join "Danne" "mora" }          // returns "Dannemora"
+    do { print "Hello world!" }         // prints "Hello world!" returns none
 
-    do { join "Danne" "mora" } // returns "Dannemora"
+Words hold references to values. Functions are also values. Set-word takes the value on it's left and assigns it to the word.
+
+    name: "Sunny"               // set-word name: assigns expression on the left to word *name*
+    print name                  // prints "Sunny" - print is a word holding a function that prints value it's passed
     
-    do { print "Hello world!" } // prints "Hello world!"
-    
-Blocks with the DO dialect code are no different to the Rejy than blocks with other data. Rejy has functions that help you work with blocks.
+    surname: join "The " "Kid"  // join is a function taking two string arguments and joining them , setword surname: assigns 
+                                // the value to word surname
+    print surname               // prints "The Kid"
+
+Blocks with the DO dialect code are no different than blocks with other data. Rejy has many functions that help you work with blocks.
  
-    append { "apple" "orange" } "lemon" // returns { "apple" "orange" "lemon" }
-    
-    second { "apple" "orange" } // returns "orange"
- 
-    do append { print } "lemon" // prints "lemon"
+    append { "apple" "orange" } "lemon"                 // returns { "apple" "orange" "lemon" }
+    second { "apple" "orange" }                         // returns "orange"
+    do append { print } second { "apple" "lemon" }      // prints "lemon"
 
-The DO dialect has no keywords or special forms. Just words that evaluate to functions. These are usually keywords or special forms.
+DO dialect has no keywords or special forms. Things like **if**, **loop**, **for** are just ordinary funtions.
 
     if greater? 10 5 { print "Woof!" } // prints "Woof!"
     
@@ -65,7 +87,7 @@ The DO dialect has no keywords or special forms. Just words that evaluate to fun
     Why Sweat
     Why Hasksaw
    
-But if, loop and for aren't keywords. They are just functions, that you can make on your own. If for example, is just a function that accepts two arguments: a boolean (true / false) and a block of code to execute if the first argument is true. There is no special form for all this either. Look at these:
+If for example, is just a function that accepts two arguments: a boolean (true / false) and a block of code to execute if the first argument is true. There is no special form for all this either. Look at these:
 
     just-a-block: append { print "Woof!" } // we assign the block to a word just-a-block
     if greater? 10 5 just-a-block // prints "Woof!"
