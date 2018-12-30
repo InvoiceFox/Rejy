@@ -86,7 +86,7 @@ Math expressions are obvious:
 Opwords can be more than operators
     
     { 1 } +append 2            // { 1 2 }
-    "janko" +join _ "metelko"  // "janko metelko"
+    "janko" +join3 _ "metelko"  // "janko metelko"
     
 Since they are multimethods they can also be ordinary operators:
     
@@ -96,6 +96,56 @@ What about piping of functions and postfix with one operator (see language like 
 This is something we need to think - test - look 
 
     http://wwww.cebelca.biz |read |get-title |uppercase |print 
+    
+    
+#### infix notation and opwords - WORKS                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                       
+opwords are words that start with a typical infix operator. like 1 + 2 ; 3 - 2 ; "janko" +join "metelko"                                                                                                                                                               
+                                                                                                                                                                                                                                                                       
+Are opwords explicit natives, it's own list or all diadic functions added with opword opeartor on front                                                                                                                                                                
+                                                                                                                                                                                                                                                                       
+1) opwords are defined as normal functions with opword format. They are always diadic                                                                                                                                                                                  
+ + explicit clear nature                                                                                                                                                                                                                                               
+ - lack of words, requrenment to define opword versions with same functionality as their prefix siblings                                                                                                                                                               
+   ( THIS IS BAD IN FACT ... promotes duplication of code by default )                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                       
+2) any word that takes two arguments can be evaluated as opword if infix operator is added in front (+-&*=><~..)                                                                                                                                                       
+ + no natives duplication, all diadic words are instantly usable = THIS ONE                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                       
+~ is for neutral ... where + - etc don't make sense                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                       
+    join "Jim" "Beam"  = = =  "Jim" +join "Beam"                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                       
+    append block { 10 20 }  = = =  block +append { 10 20 }                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                       
+#### pipewords (monadic words - one argument ... postfix basically)                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                       
+pipewords are normal words that have | as a first character. The pipe is removed and a word without the pipe is found and used.                                                                                                                                        
+                                                                                                                                                                                                                                                                       
+    10 |inc |print                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                       
+    http://www.cebelca.biz |read |parse-title |upper-case |print                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                       
+#### can opwords have more arguments than 2                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                       
+Look at either in example below - it's an opword which takes condition on left and two blocks on right.                                                                                                                                                                
+                                                                                                                                                                                                                                                                       
+    block |length? ~greater? 10 ~either [ "greater ] [ "lesser" ] |print                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                       
+**Reasoning**                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                       
+pipewords and opwords are like shallow stack programming. but some words in a pipeline will need more than 1 or 2 arguments                                                                                                                                            
+                                                                                                                                                                                                                                                                       
+**How do we do it**                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                       
+when processing opword we check how many arguments a function has. If it has 1 it's an error. If 2 it's normal opword, if more                                                                                                                                         
+than 2 then after getting the right argument we loop further and collect more arguments on the right.  
+
+
+
+ 
     
 ### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
