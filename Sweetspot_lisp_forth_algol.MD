@@ -59,10 +59,11 @@ Unix shell is an awesome composable environment **that works**. There you can co
     cat dls201810.txt | grep -P $"\tpe\t|\te\t" | head -n100  | awk '{xx= "./send-email invoice-sent " $1 " " $3; system(xx)}' > log.txt
 
 **CONS:** it's incoherent, it works on raw text (no structure)
+
 **CONS:** for deeper stack problems you are using named pipes which are somewhat cumbersome
 
-# find partner, create invoice for it, add 3 bodies, download pdf and email odt
 ```
+# find partner, create invoice for it, add 3 bodies, download pdf and email odt
 $ mkfifo _P1 _P2 _P3 _P4
 $ invf contact find "Alba co" -justid -1 | \
       xargs -I contact_id \
@@ -114,6 +115,14 @@ Opwords can take more than two arguments
 
 ### LISPS - homoiconic list based languages
 
+IANAL (I am not a lisper)
 
+PROS: lisp is really solid homoiconic (code is data and data is code) language, great well tested runtimes, macro system
 
-    
+CONS: code doesn't give enough visual hints about what is going on (for example asignment). It's too flat. Full homoiconicity doesn't exclude that (look at rebol)
+
+CONS: macro system: you have to think in two separate realities, compile-time and runtime. This duality doesn't help clear thinking about "business logic" IMHO. It sounds like a premature optimisation. 
+
+CONS: macro system: macros for doing small disperse changes to language incurs more cost (of surprise) than it's worth. Changes
+to language evaluation only makes sense in big important enough cases where learning new specialised dialect makes sense over just using language as it is.
+
