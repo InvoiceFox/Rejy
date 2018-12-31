@@ -1,4 +1,4 @@
-# Looking at factor, unix shell, lisps, rebol, algol based languages
+# Looking at factor, unix shell, lisps
 
 > This could be horribly pretentious text. I am aware of that, you reader - please be aware of that too.
 > I am nobody, but I can still type, and you can ignore ...
