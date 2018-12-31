@@ -1,4 +1,4 @@
-# Looking at factor, lisps, rebol, algol
+# Looking at factor, unix shell, lisps, rebol, algol based languages
 
 > This could be horribly pretentious text. I am aware of that, you reader - please be aware of that too.
 > I am nobody, but I can still type, and you can ignore ...
@@ -21,6 +21,8 @@
 **CONS:** the language introduces stack shuffling words, which is even bigger line noise.
 
 **PRO:** because of this, many advanced solutions vere invented that make the code nicer flowing (see factorcode.org)
+
+**CONS:** with all the advanced solution, language has become to wide
 
 **PRO:** the postfix sytax is naturaly oriented as the operations flows in a program
 
@@ -46,9 +48,69 @@ From the document: http://factorcode.org/littledan/dls.pdf
     c b a 10            ; -- Rejy code
     10 |a |b |c         ; -- Rejy code using pipewords
 
-Rejy learns from all this and offers few features.
+### Bash - unix shell
 
+Unix shell is an awesome composable environment **that works**. There you can compose installed binaries (awk, sed, grep), local files and your scripts via pipes, xargs, etc ...
 
+**PROS:** it works! it's infinitely versatile and extensible! great "repl" (shell), limitles runtime (whole computer / OS)
+
+    cat invs201810.txt | grep -P $"\tpe\t|\tp\t" | cut -f1 | xargs -i ./downloadone invoice-sent {} pdf
+    
+    cat dls201810.txt | grep -P $"\tpe\t|\te\t" | head -n100  | awk '{xx= "./send-email invoice-sent " $1 " " $3; system(xx)}' > log.txt
+
+**CONS:** it's incoherent, it works on raw text (no structure)
+**CONS:** for deeper stack problems you are using named pipes which are somewhat cumbersome
+
+# find partner, create invoice for it, add 3 bodies, download pdf and email odt
+```
+$ mkfifo _P1 _P2 _P3 _P4
+$ invf contact find "Alba co" -justid -1 | \
+      xargs -I contact_id \
+      invf inv create -c contact_id | \
+      tee _P1 | tee _P2 | tee _P3 | tee _P4 | \
+      xargs -I inv_id \
+      invf inv-b add inv_id -d "Programming" -u hour -q 30 -p 40 -t 20 & \
+      invf inv-b add `cat <_P1` -d "Support" -u hour -q 10 -p 35 -t 20 & \
+      invf inv-b add `cat <_P2` -d "Cleanup" -u hour -q 5 -p 45 -t 20 & \
+      wait & \
+      invf inv download `cat <_P3` -f pdf -o ~/invoices/. & \
+      invf inv send `cat <_P4` -f odt -e accountant@email.com
+$ rm _P1 _P2 _P3 _P4
+```
+
+### Factor and bash inspired Rejy features
+
+#### Pipewords
+
+Single depth stack problems are solved via **pipewords**. Pipewords are normal functions taking 1 argument that get "|" on left side. Any normal function get's used as pipeword by adding the pipe character in front
+
+    inc inc 10      // returns 12
+    10 |inc |inc    // returns 12
+    
+    print parse-title read http://www.cebelca.biz       // prints title of webpage
+    http://www.cebelca.biz |read |parse-title |print    // prints title of webpage
+
+    now |year |inc |print#
+
+#### Opwords
+
+If the pipe or stack needs depth of two, cou can combine in the opwords. Opwords are normal functions with arity 2 or more
+that you add a typical infix operator in front (+-\*) and ~. Or single character operators.
+
+    10 + 20 - 5 - 10            // returns 15
+    "Woof" +join "Weef!"        // returns "WoofWeef!"
+    
+Opwords can take more than two arguments
+
+    "Woof" join3 " " "Woof"     // returns "Woof Woof"
+    
+#### Combininf Pipewords, Opwords, Setwords and more
+
+    block |length? ~greater? 10 ~either [ greater ] [ lesser" ] |print
+    // equals 
+    print either greater? length? block 10 [ "greater" ] [ "lesser" ]
+    
+    
 
 ### LISPS - homoiconic list based languages
 
