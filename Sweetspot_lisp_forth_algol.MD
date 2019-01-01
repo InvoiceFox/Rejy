@@ -1,6 +1,7 @@
 # Looking at factor, unix shell, lisps ...
 
-> These are great languages hundreds levels above my toy interpreter, and people working on them were ten levels above me. I can > still have opinions and write them down, for my sake at least, but have the first scentence 
+> These are great languages hundreds levels above my toy interpreter, and people working on them were ten levels above me. I can 
+> still have opinions and write them down, for my sake at least, but have the first scentence 
 > in mind when you are reading this.
 
 ### Factor - a stack based language
@@ -125,16 +126,18 @@ Opwords can take more than two arguments
     
     
 
-### LISPS - homoiconic list based languages
+### LISPs - homoiconic list based languages
 
-IANAL (I am not a lisper)
+First ... IANAL (I am not a lisper)
 
-PROS: lisp is really solid homoiconic (code is data and data is code) language, great well tested runtimes, macro system
+**PROS:** lisp is really solid base homoiconic language, great well tested runtimes, macro system, tons of research and advances, hail lisp!
 
-CONS: code doesn't give enough visual hints about what is going on (for example asignment). It's too flat. Full homoiconicity doesn't exclude that (look at rebol)
+**CON:** code gives little visual hint about what is going on (for example asignment). It's too "flat". Full homoiconicity doesn't exclude that (look at rebol). Clojure is better in this regard.
 
-CONS: macro system: you have to think in two separate realities, compile-time and runtime. This duality doesn't help clear thinking about "business logic" IMHO. It sounds like a premature optimisation. 
+**CON** - macro system: you have to think in two separate realities, compile-time and run-time. The forced duality isn't helpful to programmer focusing just on "business logic" IMHO. It sounds like a premature optimisation would.
 
-CONS: macro system: macros for doing small disperse changes to language incurs more cost (of surprise) than it's worth. Changes
-to language evaluation only makes sense in big important enough cases where learning new specialised dialect makes sense over just using language as it is.
+**CON** - macro system: using macros for making small disperse changes to language might be counterproductive. Changes
+to language evaluation only make sense in big important enough cases where learning new customized dialect brings more benefits than just using normal functions.
+
+**PRO** - CLOS, common lisp object system is great
 
