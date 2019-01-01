@@ -1,9 +1,12 @@
 # Looking at factor, unix shell, lisps
 
-> This could be horribly pretentious text. I am aware of that, you reader - please be aware of that too.
-> I am nobody, but I can still type, and you can ignore ...
+> These are great languages ten levels above my toy interpreter, and people working on them were ten levels above me (some 
+> self taught developer). I can still have opinions and write them down, for my sake at least, but have the first scentence 
+> in mind when you are reading this.
 
 ### Factor - a stack based language
+
+I used to program in factor for about a year. The stack approach certanly has it's magic. Most of it can't be seen from a cursory look. A Factor in particular, was adding very advanced and cool solutions to the mix. 
 
 **PRO:** these languages reject **variable names**. And many times variables are just unnecesary noise that breaks the flow on logic. This is some factor code:
 
