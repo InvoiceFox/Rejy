@@ -1,12 +1,11 @@
-# Looking at factor, unix shell, lisps
+# Looking at factor, unix shell, lisps ...
 
-> These are great languages ten levels above my toy interpreter, and people working on them were ten levels above me (some 
-> self taught developer). I can still have opinions and write them down, for my sake at least, but have the first scentence 
+> These are great languages hundreds levels above my toy interpreter, and people working on them were ten levels above me. I can > still have opinions and write them down, for my sake at least, but have the first scentence 
 > in mind when you are reading this.
 
 ### Factor - a stack based language
 
-I used to program in factor for about a year. The stack approach certanly has it's magic. Most of it can't be seen from a cursory look. A Factor in particular, was adding very advanced and cool solutions to the mix. 
+I used to program in factor for about a year 10 years back. The stack approach certanly has it's magic. Most of it can't be seen from a cursory look. A Factor in particular, was adding very advanced and cool solutions and tools to the mix. I still think Slava Pestov (now he works on Swift team) and other people around it were total geniuses.
 
 **PRO:** these languages reject **variable names**. And many times variables are just unnecesary noise that breaks the flow on logic. This is some factor code:
 
@@ -21,15 +20,13 @@ I used to program in factor for about a year. The stack approach certanly has it
     [ "href" attr ] map                                             ; maps list of tags to list of href attrs
     [ print ] each                                                  ; prints each of links
 
-**CONS:** the language introduces stack shuffling words, which is even bigger line noise.
+**CON:** the language introduces stack shuffling words, which is even bigger line noise
 
-**PRO:** because of this, many advanced solutions vere invented that make the code nicer flowing (see factorcode.org)
+**PRO:** advanced solutions were invented to mitigate the need for stack shuffling words (combinators, nice tuples,...)
 
-**CONS:** with all the advanced solution, language has become to wide
+**CON:** with all the advanced solution, language maybe became to wide - to powerful for it's own good
 
 **PRO:** the postfix sytax is naturaly oriented as the operations flows in a program
-
-From the document: http://factorcode.org/littledan/dls.pdf
 
 > Code written in this style, in which a single input value
 > is gradually transformed and reshaped in distinct steps into
@@ -50,6 +47,18 @@ From the document: http://factorcode.org/littledan/dls.pdf
     
     c b a 10            ; -- Rejy code
     10 |a |b |c         ; -- Rejy code using pipewords
+    
+**PRO:** the object system, mainly the generic methods was great idea, inspired by Dylan and CLOS (more about it lower)
+
+**PRO:** the module system disjoint from type system is another great one. Quote:
+
+> Whereas many languages, notably Java, combine their module system and type system, Factor separates the two concepts
+> to  maximize  flexibity  and  modularity  of  code. Vocabularies provide  modularity,  source  code  organization,
+> and namespaces. Independent of source code organization, classes and generic words organize the data types and operations
+> of a program at run time.
+
+Quotes come from - a great read: http://factorcode.org/littledan/dls.pdf
+
 
 ### Bash - unix shell
 
