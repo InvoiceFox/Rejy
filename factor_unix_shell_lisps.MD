@@ -96,7 +96,7 @@ $ rm _P1 _P2 _P3 _P4
 
 #### Pipewords
 
-Single depth stack problems are solved via **pipewords**. Pipewords are normal functions taking 1 argument that get "|" on left side. Any normal function get's used as pipeword by adding the pipe character in front
+Pipewords is a word with pipe character on the left. It turns a word referencing a single argument function into it's postfix version. This mimics the stack with depth 1.
 
     inc inc 10      // returns 12
     10 |inc |inc    // returns 12
@@ -108,21 +108,23 @@ Single depth stack problems are solved via **pipewords**. Pipewords are normal f
 
 #### Opwords
 
-If the pipe or stack needs depth of two, cou can combine in the opwords. Opwords are normal functions with arity 2 or more
-that you add a typical infix operator in front (+-\*) and ~. Or single character operators.
+If the stack needs depth of two or more, you can use the opwords. Opwords are words referencing an function of arity 2 or more with typical infix operator character on the left, or dot (.) or single character operators.
 
-    10 + 20 - 5 - 10            // returns 15
-    "Woof" +join "Weef!"        // returns "WoofWeef!"
+    10 + 20 - 5 - 10            // returns 15 ; + - are the opwords that reference an ordinary 2 arg. function
+    "Woof" +join "Weef!"        // returns "WoofWeef!" 
     
-Opwords can take more than two arguments
-
-    "Woof" join3 " " "Woof"     // returns "Woof Woof"
+Opwords can take more than two arguments on the right side.
     
-#### Combining pipewords, opwords ...
+    join3 "Woof" " " "Woof" 
+    "Woof" +join3 " " "Woof"     // returns "Woof Woof
+    
+    set person name "Jane"
+    person .set name "Jane"        
+    
+#### Combining pipewords and opwords
 
-    block |length? ~greater? 10 ~either [ greater ] [ lesser" ] |print
-    // equals 
     print either greater? length? block 10 [ "greater" ] [ "lesser" ]
+    block |length? .greater? 10 .either [ "greater" ] [ "lesser" ] |print
     
 
 ### LISPs - homoiconic list based languages
@@ -147,6 +149,16 @@ REBOL, which is the core of Rejy - is basically LISP without parenthesis and com
 Rebol traded parenthesis for fixed arity functions - that's why it doesn't need them and needs fixed arity. Rebol has no compile
 step so no compile time macros. You can do every operation Lisp macros do at the runtime though ... it's not always the same 
 bacause of performance.
+
+#### CLOS - generic methods
+
+Rejy objects are meant to be data only. And we have generic methods as CLOS, Dylan, Factor. Methods for one "class" could be defined in different modules (vocabolaries). 
+
+    set-tag <person>
+
+Instead of Classes Rejy would use prototypic object system (probably delegated). Complex values would called Tags (instead of classes in CLOS) on which generic methods would dispath on. 
+
+Tags will have it's own dialect that could define validation rules for object slots and default values.
 
 ### REBOL
 
