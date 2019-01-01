@@ -118,12 +118,11 @@ Opwords can take more than two arguments
 
     "Woof" join3 " " "Woof"     // returns "Woof Woof"
     
-#### Combininf Pipewords, Opwords, Setwords and more
+#### Combining pipewords, opwords ...
 
     block |length? ~greater? 10 ~either [ greater ] [ lesser" ] |print
     // equals 
     print either greater? length? block 10 [ "greater" ] [ "lesser" ]
-    
     
 
 ### LISPs - homoiconic list based languages
@@ -141,3 +140,26 @@ to language evaluation only make sense in big important enough cases where learn
 
 **PRO** - CLOS, common lisp object system is great
 
+### LISPs inspiration to Rejy
+
+REBOL, which is the core of Rejy - is basically LISP without parenthesis and compile time macros, so that is that. 
+
+Rebol traded parenthesis for fixed arity functions - that's why it doesn't need them and needs fixed arity. Rebol has no compile
+step so no compile time macros. You can do every operation Lisp macros do at the runtime though ... it's not always the same 
+bacause of performance.
+
+### REBOL
+
+If you switch {} with [] Rejy is REBOL. The core is the same. There are additions and changes on top of it. Like infix (opwords) or change in object system (generic words), but Rejy is first and foremost a REBOL's child if not even clone.
+
+One thing about REBOL still remains open for me, and that is scoping. REBOL has a unique scoping mechanism called 'definitional scoping'. There was one document written about it by a REBOL guru Ladislav Mercir. I have to go through it again to really figure out if this is something I want or need to get all the REBOL dynamicism. Maybe it's required for dialects to really work - or thing like user level implementation of CLOSURES inside rebol (implemented by the same Ladislav)
+
+BINDOLOGY:
+
+https://en.wikibooks.org/wiki/Rebol_Programming/Advanced/Bindology
+
+A blogpost about it:
+
+http://blog.revolucent.net/2009/07/deep-rebol-bindology.html
+
+Ladislav has written many more documents exploring advanced REBOL sides and many hard to believe possible functions for rebol - like the clojure one, but they seem lost :( . I see internet never forgets only works for awkward photos.
