@@ -5,9 +5,9 @@ DO:
 - [x] add infix evaluator for opwords
 - [x] add infix evaluator for opwords with more than 2 arguments
 - [x] make further plans about modules, object system, write docs
-- [ ] add tag-word to parser
+- [x] add tag-word to parser
 - [ ] add make-tag function with very simple or just no validation dialect
-- [ ] determine runtime representation of objects with tags (one for now)
+- [x] determine runtime representation of objects with tags (one for now)
 - [ ] add tuple function 
 - [ ] add object function
 - [ ] add generic or multi function that creates user level generic method
@@ -18,3 +18,4 @@ THINK:
 - [ ] read more about scopes (bindology) do we need definitinal scoping, do we want, what would implementation be like, would in 
   slow down things or speed up?
 - [ ] how are user function scoped, how is it implemented
+
