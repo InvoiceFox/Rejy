@@ -1,6 +1,6 @@
-# Basics
+# Writing down basic ideas of language
 
-I am writing down ideas about language design, as they come, here.
+I am writing down ideas about language design and implementation, as they come, here.
 
 ### What is Rejy
 
