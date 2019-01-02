@@ -186,13 +186,28 @@ Problem: Some of functions we have now in Rejy work directly on unboxed JS value
 [ ] is block
 "" is string
 213 or 21.42 is number
+
+// words
 new Uint16Array([11, <idx>]); word
-new Uint16Array([12, <idx>]); setword
+new Uint16Array([12, <idx>]); setword 
 new Uint16Array([13, <idx>]); getword
 new Uint16Array([14, <idx>]); litword
+new Uint16Array([15, <idx>]); opword
+new Uint16Array([16, <idx>]); tagword
+new Uint16Array([17, <idx>]); settagword
 
-// functions tuple and object also generate rejy object which is JS object
-{ }
+// object, basic implementation
+{ __tag__: Uint16array([1, <idx>]), prop1: <val1>, ...  } 
+// if there will be multiple tags, first tag will be number of tags or 2
+
+// tag definition
+[ new Uint16array([101]), [ ... block of tag definition dialect (validation dialect and whats needed) ... ] ]
+
+// function definition
+[ new Uint16array([102]), [ ... argument block ... ] [ ... function body block ... ]]
+
+
+
 ```
 
 ```
