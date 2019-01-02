@@ -11,10 +11,12 @@ DO:
 - [x] add infix evaluator for opwords
 - [x] add infix evaluator for opwords with more than 2 arguments
 - [x] make further plans about modules, object system, write docs
-- [x] add tag-word to parser
-- [ ] add make-tag function with very simple or just no validation dialect
+- [x] add tag-word and set-tag-word to parser and evaluator
+- [x] add make-tag function with very simple or just no validation dialect
 - [x] determine runtime representation of objects with tags (one for now)
+- [ ] make lit words work
 - [ ] add tuple function 
+- [ ] make function that get's value from object via lit-word
 - [ ] add object function
 - [ ] add generic or multi function that creates user level generic method
 
