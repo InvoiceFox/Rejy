@@ -143,10 +143,6 @@ pipewords and opwords are like shallow stack programming. but some words in a pi
 when processing opword we check how many arguments a function has. If it has 1 it's an error. If 2 it's normal opword, if more                                                                                                                                         
 than 2 then after getting the right argument we loop further and collect more arguments on the right.  
 
-
-
- 
-    
 ### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
     
@@ -217,7 +213,7 @@ if we visit array we checj if first item is Uint8Array() if it is it's composite
 
 ### How do we go about this
 
-Try to generate 
+Try to generate
 
 ## Failed
 
@@ -251,4 +247,3 @@ additional spec types.
     }
 
 **FAIL ... we don't want to use "object/method args" code at all ... basically we just want data tuples and multimethods**
-
