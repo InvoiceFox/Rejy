@@ -65,15 +65,15 @@ Quotes come from - a great read: http://factorcode.org/littledan/dls.pdf
 
 Unix shell is an awesome composable environment **that works**. There you can compose installed binaries (awk, sed, grep), local files and your scripts via pipes, xargs, etc ...
 
-**PROS:** it works! it's infinitely versatile and extensible! great "repl" (shell), limitles runtime (whole computer / OS)
+**PROs:** it works! it's infinitely versatile and extensible! great "repl" (shell), limitles runtime (whole computer / OS)
 
     cat invs201810.txt | grep -P $"\tpe\t|\tp\t" | cut -f1 | xargs -i ./downloadone invoice-sent {} pdf
     
     cat dls201810.txt | grep -P $"\tpe\t|\te\t" | head -n100  | awk '{xx= "./send-email invoice-sent " $1 " " $3; system(xx)}' > log.txt
 
-**CONS:** it's incoherent, it works on raw text (no structure)
+**CONs:** it's incoherent, it works on raw text (no structure)
 
-**CONS:** for deeper stack problems you are using named pipes which are somewhat cumbersome
+**CON:** for deeper stack problems you are using named pipes which are somewhat cumbersome
 
 ```
 # find partner, create invoice for it, add 3 bodies, download pdf and email odt
@@ -126,7 +126,51 @@ Opwords can take more than two arguments on the right side.
     print either greater? length? block 10 [ "greater" ] [ "lesser" ]
     block |length? .greater? 10 .either [ "greater" ] [ "lesser" ] |print
     
+Maybe having two notations (polish + this postfix/infix) will prove to be confusing. Maybe some will program mostly in polish
+and other mostly in postfix/infix. We will see.
 
+I want to explore this still, because just polish (prefix) notation is very cumbersome in some cases. Especially if you 
+code in a way where you don't want store patial results in a local variable w/o technical reason.
+
+Rebol/Rejy in polish notation can also do inline assignment and debugging very nicely. Not sure about in/post-fix yet.
+
+    a: sum sum 10 e: 20 30      // b is 50, a is 60
+    
+    20 +sum 30 e: +sum 10 a:    // this can't work as a: at the end can't be distinguisher from being part of a new expression
+                                // it we wanted inline assignment in in/post fix it s    
+
+    a: 20 +sum 30 +sum 10       // this works but there is no inline assignemnt possible
+    
+    e: 20 +sum 30               // you would have to do it in two expressions
+    a: e +sum 10
+    
+One benefit of in/post-fix notation is interactive development in REPL, where you start with initial data and then interactively add transformations to it. Similar to bash. Pipewords are like bash pipes, opwrds are more like bash command xargs.
+
+    > file
+    %order.csv
+    
+    > file |load
+    person,item,qty
+    Jane Doe,Firestarter,1
+    Joe Doe,Wood,33
+    Joe Doe,Meat,2
+    
+    > file |load .parse-csv { ignore header separator "," to blocks }
+    { { "Jane Doe" "Firestarter" 33 } ... }
+    
+    > file |load .parse-csv { ignore header separator "," to blocks } .map 'x [ first x ]
+    { "Jane Doe" "Joe Doe" "Joe Doe" }
+    
+    > file |load .parse-csv { ignore header separator "," to blocks } .map 'x [ first x ] |unique
+    { "Jane Doe" "Joe Doe" }
+    
+QUESTION: Looking at this. Should we just join opwords and pipewords so also .map upthere could be |map?
+QUESTION: Rejy has no syntactic sugar and this will probably remain. But there would be an option that "| word" would be turned to "|word" which would make it nicer looking. So far it's NO.
+
+### Other ideas
+
+Modules should be separated from types/classes (object tags in our case). 
+    
 ### LISPs
 
 First ... IANAL (I am not a lisper)
@@ -157,18 +201,36 @@ Rejy objects are meant to be data only. And we have generic methods as CLOS, Dyl
 Instead of Classes Rejy would use prototypic object system (probably delegated). Complex values would called Tags (instead of classes in CLOS) on which generic methods would dispath on. 
 Tags will have it's own dialect that could define validation rules for object slots and default values.
 
+    // STILL FORMING THE IDEAS
+    
+    // make-tag object and tuple are functions, <tag> is tag-word ... <tag>: is tag-set-word
+    
+    // define a tag and (optional) validation rules - could the rules also remove the need for constructor?
+    // If the rules aren't met produce an error with validation error description as a block (computer readable)
     <person>: make-tag { name: required and string age: optional 0 and integer birth: optional none and iso-date }
+    
+    // create two objects with tag person
     jim: object <person> { name: "Jim" age: 40 }
     jane: object <person> { name: "Jane" }
+    
+    // create object w/o Tag
     car: tuple { brand: "Audi" owner: jane }
+    // set the tag after object is already created. 
     set-tag car <car>: make-tag { brand: required }
     
     car/owner/name |print
     
     car/owner: jim
     
-    describe: method { <person> obj } { print rejoin { "Hi, I am" _ obj/name } 
-    describe: method { <car> obj } { print rejoin { "Vroom Vroom:" _ obj/brand } 
+    introduce: method { <person> obj } { print join "My name is " obj/name } 
+    introduce: method { <car> obj } { print join "Vroom Vroom by " obj/brand } 
+    
+    > { jim jane } |do-each 'x { introduce x }
+    My name is Jim
+    My nam is Jane
+    
+    > introduce car
+    Vroom Vroom by Audi
 
 Idea is that Tags can also have transformers. These are functions that automatically transform object from one tag to another. This also helps with object versioning / upgrade.
 
@@ -176,6 +238,19 @@ Idea is that Tags can also have transformers. These are functions that automatic
     // still WIP .. does it even make sense to have them? Are they registered in some register and 
     // automatically used or localy bound to words. Should these be just normal functions ... maybe only make 
     // obj-transformation dialect that helps, convert, combine values from one object to another.
+    // THIS DOESN'T MAKE SENSE ... THE FUNCTION DOESN'T KNOW TO WHAT WORD IT WILL BE SET AND WORD DOESN'T
+    // HAVE A TYPE / TAG .. the value itself has it.
+    
+    // this would be just normal generic method
+    to-employee: multi { <person> person } { transform { ..... } }
+    a-employee: to-employee a-person
+
+### Limits so far
+
+In version pre 0.5 objects can have just one Tag and generic methods dispatch just on first argument.
+
+Rejy has prototypical object model. Objects can have prototype objects. It would be nice if tags could be composed but so far tags don't combine automaticall when prototype is set. The child object has to manually have it's tag set.
+
 
 ### REBOL
 
