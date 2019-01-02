@@ -157,3 +157,25 @@ The pipe trick ... if we make evaluator with infixed operators and opwords as pl
 
 Definition of object with spec. Spec can have tag and validation, spec if bound to tag and can't be changed. Produces an error on collision.  
 
+### Tags, tuple, object
+
+Currently we want this:
+
+    // tuple function creates object without tag
+    car: tuple { brand: "Audi" }
+
+    // we create a tag .. simple spec dialect will work in version 0.02
+    <person>: tag { }
+
+    // object creates object with tag
+    jim: object <person> { name: "Jim" age: 40 }
+
+Then we can make a generic user function on a tag
+
+    // we need to make lit-words work and a method that get's object property based on lit-words
+    jim .get 'name  // returns "Jim"
+
+    introduce: generic { <person> p } { p .get 'name |print }
+    
+    
+    
