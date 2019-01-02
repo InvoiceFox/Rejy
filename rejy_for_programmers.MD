@@ -1,4 +1,4 @@
-## Rejy basics
+## Rejy for programmers
 
 
     *this document tries to explain what and why to programmers not familiar with Re(db)ol languages*
