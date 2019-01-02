@@ -14,10 +14,12 @@ DO:
 - [x] add tag-word and set-tag-word to parser and evaluator
 - [x] add make-tag function with very simple or just no validation dialect
 - [x] determine runtime representation of objects with tags (one for now)
-- [ ] make lit words work
-- [ ] add tuple function 
-- [ ] make function that get's value from object via lit-word
-- [ ] add object function
+- [x] make lit words work
+- [x] make tag-word return itself on evaluation
+- [x] add tuple function 
+- [x] make function that get's value from object via lit-word
+- [x] add object function
+- [ ] make native generic function word with new tags 
 - [ ] add generic or multi function that creates user level generic method
 
 THINK:
@@ -25,7 +27,8 @@ THINK:
 - [ ] read more about modules / namespaces, try some options
 - [ ] read more about scopes (bindology) do we need definitinal scoping, do we want, what would implementation be like, would in 
   slow down things or speed up?
-- [ ] how are user function scoped, how is it implemented
+- [ ] how are user functions scoped, how is it implemented
+- [ ] look about closures in rebol ... do we want them? as default?
 
 This should be enough to explore made choices (infix/postfix, opwords, pipewords, prototypical objects) start making first simple dialects (validation dialect), test performance, ...
 
