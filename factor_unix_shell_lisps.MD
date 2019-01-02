@@ -127,7 +127,7 @@ Opwords can take more than two arguments on the right side.
     block |length? .greater? 10 .either [ "greater" ] [ "lesser" ] |print
     
 
-### LISPs - homoiconic list based languages
+### LISPs
 
 First ... IANAL (I am not a lisper)
 
@@ -154,11 +154,28 @@ bacause of performance.
 
 Rejy objects are meant to be data only. And we have generic methods as CLOS, Dylan, Factor. Methods for one "class" could be defined in different modules (vocabolaries). 
 
-    set-tag <person>
-
 Instead of Classes Rejy would use prototypic object system (probably delegated). Complex values would called Tags (instead of classes in CLOS) on which generic methods would dispath on. 
-
 Tags will have it's own dialect that could define validation rules for object slots and default values.
+
+    <person>: make-tag { name: required and string age: optional 0 and integer birth: optional none and iso-date }
+    jim: object <person> { name: "Jim" age: 40 }
+    jane: object <person> { name: "Jane" }
+    car: tuple { brand: "Audi" owner: jane }
+    set-tag car <car>: make-tag { brand: required }
+    
+    car/owner/name |print
+    
+    car/owner: jim
+    
+    describe: method { <person> obj } { print rejoin { "Hi, I am" _ obj/name } 
+    describe: method { <car> obj } { print rejoin { "Vroom Vroom:" _ obj/brand } 
+
+Idea is that Tags can also have transformers. These are functions that automatically transform object from one tag to another. This also helps with object versioning / upgrade.
+
+    register-transformer <person> 'to <employee> { name: :full-name birth: code (calc-year age ... )
+    // still WIP .. does it even make sense to have them? Are they registered in some register and 
+    // automatically used or localy bound to words. Should these be just normal functions ... maybe only make 
+    // obj-transformation dialect that helps, convert, combine values from one object to another.
 
 ### REBOL
 
