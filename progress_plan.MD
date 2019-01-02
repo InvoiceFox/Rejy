@@ -1,6 +1,6 @@
 *started writing this on 12/20/2018*
 
-#### Rejy version 0.01 Alpha
+### Rejy version 0.01 Alpha
 
 *** basics ***
 
@@ -27,39 +27,39 @@ THINK:
 
 This should be enough to explore made choices (infix/postfix, opwords, pipewords, prototypical objects) start making first simple dialects (validation dialect), test performance, ...
 
-#### Rejy version 0.02 Alpha
+### Rejy version 0.02 Alpha
 
 *** first dialects, modules ***
 
 Start building the JVM interpreter. Add first dialects to JS version. Add simple parse function. Make simple modules work. Think about Factor vocabularies.
 
-#### Rejy version 0.03 Alpha
+### Rejy version 0.03 Alpha
 
 *** JVM interpreter, first shell scripting ***
 
 Make basic JVM interpterer. Compare performance with JS one. Test features, solidify runtime representations, prepare for first 
 practical work for CLI shell scripts.
 
-#### Rejy version 0.04 Alpha
+### Rejy version 0.04 Alpha
 
 *** preparing for web-server ***
 
 Make JS or JVM (if already there) run OK for longer running processes. Test memory consumption, mem. leaks, performance bottlenecks. Start preparing for first webapp-use
 
-#### Rejy version 0.05 Alpha
+### Rejy version 0.05 Alpha
 
 *** first webserver ***
 
 Make JS or JVM (depending on progress and performance results) version web server capable. Combine it with a simple server that 
 returns a http response. It could be nodejs or JVM (WAR) based. Web server code will further show 
 
-#### Rejy version 0.06 Alpha
+### Rejy version 0.06 Alpha
 
 *** return to language desing ***
 
 Return to language design, new things that appeared worthy during developments so far. More Rebol features, like more concrete *parse*, deciding on refinements, ports and other Rebol features. 
 
-#### Rejy version 0.07 Apha
+### Rejy version 0.07 Apha
 
 *** concrete modules, objects, tags ***
 
