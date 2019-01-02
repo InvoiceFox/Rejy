@@ -1,7 +1,7 @@
 ## Rejy basics
 
 
-    *this document tries to explain what and why to people not familiar with Re(db)ol languages*
+    *this document tries to explain what and why to programmers not familiar with Re(db)ol languages*
 
 
 Rejy is an experimental language. I took the basic idea of Rebol, made it visually closer for most programmers and am extending it in some new ways to see where it leads. 
