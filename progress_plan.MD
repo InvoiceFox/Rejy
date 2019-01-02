@@ -29,7 +29,7 @@ This should be enough to explore made choices (infix/postfix, opwords, pipewords
 
 ### Rejy version 0.02 Alpha
 
-*** first dialects, modules ***
+*** scope, modules, very first dialect ***
 
 Start building the JVM interpreter. Add first dialects to JS version. Add simple parse function. Make simple modules work. Think about Factor vocabularies.
 
