@@ -4,16 +4,20 @@ I am writing down ideas about language design and implementation, as they come, 
 
 ### What is Rejy
 
-* First of all, it's a **experimental** or **toy** language made by amateur language designer
-* A language that **looks** a little more familiar to general developers, but is 100% REBOL-like blocks (three legged stool poem)
+* First of all, it's a **experimental** or **toy** language made by **amateur** language designer
+* A language that **looks** a little more familiar to general developers, but is 100% REBOL-like blocks 
+    (three legged stool poem)
+* If and where possible, friendlier to FP concepts, safer
 
 ### Trying to achieve
+
 * rebol like blocks, words and values all the way down - NP
-* advanced simple and safe objects with tags, prototypes (delegates) validators, transformators and multimethods - OK
-* Multimethods on tags and natives - OK
-* User definable opwords (infix words) - TRY
+* Multimethods on tags and natives - DONE
+* User definable opwords (infix words) - DONE
+* CLOS like prototypical object system 
 
 ### Unresolved
+
 * Scopes, isolation, pure-functions? read only outer access?? (can it be read only? if funcs aren't pure??)
 * Pure funcs that cal only call pure funcs?
 * Modules?
@@ -145,15 +149,13 @@ than 2 then after getting the right argument we loop further and collect more ar
 
 ### Pipe trick, infix opwords ... this would be nice (needs solving on evaluator side)
     
-    
 The pipe trick ... if we make evaluator with infixed operators and opwords as planned then this should be no special problem either.
 
-    customer/name|to-uppercase | limit-length 10
+    customer/name |to-uppercase |limit-length 10
     
-    person/birth|year|to-string|wrap "***"|print
+    person/birth |year |to-string |wrap "***" |print
 
 Definition of object with spec. Spec can have tag and validation, spec if bound to tag and can't be changed. Produces an error on collision.
-
 
 ## Implementation
 
@@ -205,9 +207,6 @@ new Uint16Array([17, <idx>]); settagword
 
 // function definition
 [ new Uint16array([102]), [ ... argument block ... ] [ ... function body block ... ]]
-
-
-
 ```
 
 ```
@@ -221,44 +220,5 @@ new Uint16Array([17, <idx>]); settagword
    ]
 ]
 ```
-if we visit array we checj if first item is Uint8Array() if it is it's composite type. If it is we turn it into Uint16Array(2) where first value is type and second is index in process wide WORDSINDEX.  
+if we visit array we check if first item is Uint8Array() if it is it's composite type. If it is we turn it into Uint16Array(2) where first value is type and second is index in process wide WORDSINDEX.  
 
-    xx instanceof Uint16Array
-
-
-### How do we go about this
-
-Try to generate
-
-## Failed
-
-### Objects and modules - FAILED
-
-* Objects have a lookup list, list ob object prototypes where words are looked-up, if not found in current object.
-* Modules have the same need of lookup, they usually lookup into modules they import. So here Modules are exactly just objects
-  with same functionality
-
-```
-jim: tuple {
-   name: "Jim"
-   age: 30
-}
-```
-*tuple* is a function that creates object without spec, *object* is a function that creates object with spec also. Spec has it's 
-own spec dialect. If it's just list of words it means these are lookup objects. With a little help from setwords you can add
-additional spec types.
-
-    livething: tuple {
-        born: none
-    }
-
-    mammal: tuple {
-        sound: none
-        say: does { print join "dog says " sound }
-    }
-    
-    dog: object { mammal livething } {
-        sound: "woof"
-    }
-
-**FAIL ... we don't want to use "object/method args" code at all ... basically we just want data tuples and multimethods**
