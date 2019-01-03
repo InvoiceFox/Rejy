@@ -9,9 +9,9 @@ I am writing down ideas about language design and implementation, as they come, 
     (three legged stool poem)
 * If and where possible, friendlier to FP concepts, safer
 
-### Trying to achieve
+### What we want
 
-* rebol like blocks, words and values all the way down - NP
+* rebol like blocks, words and values all the way down - DONE
 * Multimethods on tags and natives - DONE
 * User definable opwords (infix words) - DONE
 * CLOS like prototypical object system 
@@ -157,7 +157,33 @@ The pipe trick ... if we make evaluator with infixed operators and opwords as pl
 
 Definition of object with spec. Spec can have tag and validation, spec if bound to tag and can't be changed. Produces an error on collision.  
 
-### Tags, tuple, object
+### Lit-words
+
+Lit-words evaluate to word
+    
+    do [ 'word ] // word
+    
+    print 'word  // prints word
+    
+
+### Tags-words
+
+We need tag-words to have special behaviour. They evaluate to themselves, so the asignment holds value/idex of assigned word, not it's valie in way.  To really evaluate them we need get-tag-word.
+
+    <tagtag> // no undefined error, evaluates to itself (indexes the tagtag)
+    <tagtag> tag { ... spec ... }
+    // so when we call
+    jim: object <tagtag> { }    // <tagtag> doesn't evaluate to value, but to indexed word tagtag itself 
+                                //which we need in this case.
+    
+    <tagtag>: 500
+    x: 333 + :<tagtag> // only get-tag-word returns value 888
+    
+Could also get helpfull for constructs like 
+
+    wrap { <h2> "Ljubljana" <p> "some text" }   // where <strong> and <p> are undefined, but return themself and are indexed
+
+### tuple, object
 
 Currently we want this:
 
@@ -167,7 +193,7 @@ Currently we want this:
     // we create a tag .. simple spec dialect will work in version 0.02
     <person>: tag { }
 
-    // object creates object with tag
+    // object creates object with tag>
     jim: object <person> { name: "Jim" age: 40 }
 
 Then we can make a generic user function on a tag
@@ -177,5 +203,24 @@ Then we can make a generic user function on a tag
 
     introduce: generic { <person> p } { p .get 'name |print }
     
+Setword assignment will not work in this case, because we don't set value of multimethod directly, but we register it with generic method object or with some per module global list, which won't work well as it can't be naturally scoped etc. So it must be some local object, similar to CLOS and Factor. 
+
+When we call the function, we don't call it, but we call this local generic object and it then dispatches based on first argument. I am not sure... what happens when jou include module with multimethods objects that you already have? If you do it into same namespace ... do they get automatically merged into your local multimethod object? :/ What if it's not in top-level code? ... 
+
+    module1
+      intro: generic {}
+      beep: generic {}
+      method 'intro { <person> p } { print get p 'name }
+      method 'intro { <car> c } { print get c 'brand }
+      method 'beep { <car> c } { print "beep!" }
+
+    module2
+      intro: generic {}
+      move: generic {}
+      method 'intro { <house> h } { print get h 'address }
+      method 'move { <car> c } { print h .get 'miles .set-to h 'miles }
     
-    
+The point of generic methods is that we do call short not namespaced words that dispatch on first arg ... so ehat is most natural here??
+
+look at clos, dylan, factor for modules+scopes+generic methods.
+
