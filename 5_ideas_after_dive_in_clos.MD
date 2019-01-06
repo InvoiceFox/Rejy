@@ -82,10 +82,18 @@ Hm ... while function and value words are no different, when evaluator evaluates
     
     add: pure [ aa bb ] [ aaa + bb ]  // on evaluation raises error because aaa is value defined in outer scope, 
                                       // + is func defined in outer scope , but it passes
+    addio: func [ aa ] [ print aa ]   // works func is like pure + i
+    addr: dirty [ aa /read aaa ] [ print getmyid + aa + aaa ]   // works
     
-    addio: func [ aa ] [ print aa ]   // works func is like pure + io
+    // looks BAD and we have also generic methods * 2 etc ... this would be the way
     
-    adda: dirty [ aa /read aaa ] [ print getmyid + aa + aaa ]   // works
+    add: func [ aa bb /pure ] [ aa + bb ]    // produces error
+    addio: func [ aa bb ] [ print aa + bb ]  // default .. no need to specify /io
+    addr: func [ aa bb /read aaa ] [ print getlyid + aa + aaa ] // calls dirty func and global variable
+    
+    // then multimethods can probably have same rules
+    
+    
     
  Function creates it's own context. All variables, except in dirty /write /read are variables limited to this context. That is destroyed after that. **optimisation** maybe we could recycle these context not constantly create and destroy them.
  **crazy idea** what if we make stack dialect and function option that is executed by VM like micro machine. We could then write 
@@ -97,8 +105,46 @@ Hm ... while function and value words are no different, when evaluator evaluates
  
      x: 200
      a: 100
-     let [ x: 1 ] [ print a + x ]       // prints 101
+     let { x: 1 } { print a + x }       // prints 101
      print x                            // prints 200
  
-    
+ Based on such lexical scope are also closures.
+ 
+     counter: let [ count: 0 ] [ closure [ /rw count ] [ print count: count + 1 ] ]
+     print counter    // prints 1
+     print counter    // prints 2
+     print counter    // prints 3
 
+**CONCRETE PLANS**
+
+make it so that native functions are defined as pure,io,dirty
+
+make user function pure option that creates it's own context and raises error on any outside access except pure functions.
+
+make dirty function that allows outside access (so far to all values in env). ??Make dirty take env and return new env??
+
+### State serialisation in combination with code - how?
+
+We have packages. Each package has CODE and we have ENV
+
+ * in interactive mode record repl entries and store them to CODE list
+ * before each entry evaluation, push environment to ENV stack so we can undo / get it back also store entry to CODE
+ * on undo remove last entry from CODE and pop last item from stack and use previous one
+ * save code to package via function save-repl-session
+ * load code and run it to the point via load-repl-session .. by running it we should get to the same state and then continue
+ * add something to interactively test and add to test of a package
+ * module folders/files are the same as for factor which enables that each package also has documentation and tests
+ 
+ 
+ ### GENERIC FUNCTIONS
+ 
+We have only one global registry of generic methods. So far dispatch only on first argument. We don't need separate defgeneric step. 
+ 
+     multi 'intro { <movie> m } { m .at 'name |print }
+     multi 'intro { <person> p mood } { either mood > 5 { "Yo" } { "Meh" } }
+     
+     jim: object <person> { name: "Jim" }
+     lotr: object <movie> { name: "LOTR" }
+     
+     intro lotr
+     intro jim 10
