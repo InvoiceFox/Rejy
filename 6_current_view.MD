@@ -28,16 +28,19 @@ by switch that would turn all lockable functions and values locked when you chan
  
  ### Level 0
  
- ve have a "DO" evaluator. It understands words, setwords, numbers and strings. It can evaluate builting function object and a user
- function object. All else are functions (if, while, repeat, for, func, ....). For example if is a builting function that accepts
- number and two blocks. If it's positive it evaluates first block. If it's zero the second.
+ We have a parser, that can generate Block, Word, Setword, Number nodes.
  
- func is a builtin function that creates a user function object. It's assigned via setword as any other value and when reached by
- evaluator it's invoked.
+ We have a evaluator that understands blocks, words, setwords, numbers. It can evaluate builting function object and a user
+ function object. All else are functions (if, while, repeat, for, func, ....). For example if is a builting function that accepts number and two blocks. If it's positive it evaluates first block. If it's zero the second.
+ 
+ func is a builtin function that creates a user function object. It's assigned via setword as any other value and when
+ reached by evaluator it's invoked.
+ 
+ We do basic optimisation, internal representation, evaluator, function invocation. Think about scoping ...
  
  ### Level 1
  
- Has a Tag object and generic functions.
+ Has a Tag object and generic functions. Has prefix and infix words. Here we have a language with some of it's core features.
  
  ### Level 2
  
