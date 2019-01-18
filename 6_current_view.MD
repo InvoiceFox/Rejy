@@ -2,9 +2,9 @@
 
 ## Truffle, Graal
 
-Our practical focus is on language for backend/server/networking, so Java makes sense. There is Graal and Truffle framework, 
-that can greatly speed up the interpreter on it's own, but it's more complex than making regular interpreter. Especially with 
-some Rebol-like specifics. You don't know before evaluation itself how many expressions some word will consume:
+My practical focus is on language for backend/server/networking, so Java makes sense. It's also command line, where Java is not ideal because of a little slow startup, but there are some tools inside graalvm that could help with that. Or we could use nodejs version for that. If we wrote interpreter in Go the performance, which we still want for server stuff would be limited. We would need to think about bytecode vm soon and even implementing that wouldn't mean that bigger performance by itself.
+
+There is Graal and Truffle framework, that can greatly speed up the interpreter on it's own, but it's more complex than making regular interpreter. Especially with some Rebol-like specifics. You don't know before evaluation itself how many expressions some word will consume. But lets try to make an evaluator for such functions and see where we can get with it in terms of performance.
 
     add 100 add 200 inc 300
     
