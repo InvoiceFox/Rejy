@@ -63,4 +63,8 @@ But there will be runtime Objects that can't be represented in code, but are onl
 
 Like RjFunctionNode. So RjFunctionNode is also never present directly in AST but only a word refering to RjFunctionNode is.
 
-But on the other hand, maybe when we lock the block the functions can be inserted direcly in executable AST ??? And since RjBlockNode is a Node even though it's just internal runtime object, again referenced by a word in AST, not directly on AST (but maybe it could be 
+But on the other hand, maybe when we lock the block the functions can be inserted direcly in executable AST ??? And since RjBlockNode is a Node even though it's just internal runtime object, again referenced by a word in AST, not directly on AST (but maybe it could be.
+
+## Namespace, scoping, words ...
+
+First I need to figure out how exactly Words, Frames, Slots are used and where. There is some discrepency about when this happens. Slots / descriptors are somewhat like my words indexes, but a person says it's per function level - and at parse time. What is a function is in Rejy only determined at evaluation, not Runtime.
