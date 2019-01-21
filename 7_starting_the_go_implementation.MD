@@ -21,12 +21,14 @@ running server apps, which is the ultimate practical goal.
 
 Rejywk - rjk in short will try to use infix postfix words, dialecting, etc ... 
 
-    # infix postfix words to the rescue or at least to some better left-to-right maleability
+    # infix postfix words to the rescue or at least to some better left-to-right maleability    
     cat data | rjk -s, -b'{ $1 |greater? 1990 |either [ $2 ] [ $3 ] + 100 |print }'
 
     # awk for json data -json loads one object 
     cat data.json | rjk -json '{ now |year - ($$ >get 'person >get 'birth |parse-date |year) ^+_ ($$ >get 'person >get 'name) |print }'
-    # dialect or just ordinary functions to turn csv to json, you can also turn and then to manipulationg -json further
+    
+    # dialect or just ordinary functions to turn csv to json, you can also turn and then to manipulationg -json further    
     cat data | rjk -tojson -s; '{ make { type: 'person birth: $2 name: $4 } }'
+    
     
 Rjk has multiple profiles with modules and helper functions that you can edit and prepare and can load via flag.
