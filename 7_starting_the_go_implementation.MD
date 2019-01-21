@@ -32,3 +32,6 @@ Rejywk - rjk in short will try to use infix postfix words, dialecting, etc ...
     
     
 Rjk has multiple profiles with modules and helper functions that you can edit and prepare and can load via flag.
+
+For inplace json object generation ... maybe small stack based approach would work too, like with parboiled ast generation. So
+Rejy could be worth having a stack mode too.            
