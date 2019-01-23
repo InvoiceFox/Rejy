@@ -1,6 +1,7 @@
 # Why I think Rejy will have adequate performance for web-apps
 
-Rejy, being similarly to AST interpreted won't be that fast. So why do I think it will behave great on for web-apps:
+Rejy, being similarly to AST interpreted won't be that fast. So why do I think it will still perform OK for web-apps. All in all,
+webapps are usually IO bound, not CPU bound. The process is waiting for database or TCP communication most of the time. But still:
 
  * Webapp code (in my webapps) executes only single limited set of commands per requst. In 99% cases it never(1) loops: 
    * It just validates inputs. 
