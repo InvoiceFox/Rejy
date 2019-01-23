@@ -1,4 +1,4 @@
-# Why I thing Rejy Go will be more than fast enough for writing webapps
+# Why I think Rejy will have adequate performance for web-apps
 
 Rejy, being similarly to AST interpreted won't be that fast. So why do I think it will behave great on for web-apps:
 
