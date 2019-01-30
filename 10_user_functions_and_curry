@@ -1,0 +1,35 @@
+# User functions, currying and generic function
+
+Currently main things we strive for around functions are functions as first class citisens (not a problem), currying and something
+similar to generic functions (context sensitive functions). The main problem in implementing these are I think the performance 
+implications. 
+
+We have builting functions working and rather performant. Probably most of basic library will be written as builtin functions.
+
+If we want currying to be a nontrivial part of the language we must user level and builtin functions must be curryable. And
+hopefully performant (not sure how we make it w/o allocations / array / map?)
+
+# User level function implementation
+
+We will try to implement this today. We will see the performance then.
+
+# Currying syntax
+
+This is still experimental, but rebol, because of no ques on number of arguments can't do classical currying. Some ideas...
+
+    add5: add 5 _
+    
+we will use blocks of code for map, filter, reduce, seek ... does this make it less composable maybe ? ? ?
+    
+should we us (annonymous) functions instead?
+
+We want the patterns that we could get via curry, compose, functors?
+
+getName = compose(get('name'), uppercase)
+
+get-name: compose get _ 'name uppercase
+
+get-name: fn [ x ] [ get x 'name |uppercase ]
+    
+    
+    
