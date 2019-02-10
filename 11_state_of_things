@@ -38,3 +38,29 @@ with @user for starters. Where you can set @user level values across multiple de
 First examples of mobile code...
 
 That's it for now
+
+## First steps of shell
+
+This development will be useful for making a good language "repl" or/and if we make the "os shell" with the language we had idea.
+I believe more can be done than it's standard repl/shell in terms of interactive behaviour.
+
+About the shell, I want to explore the @user @proc @WORLD ideas
+
+The sad thing is that it seems there is no way to get character under cursor. For example. You do ls ... go over a file and it 
+gets copied in your current input.
+
+Otherwise, commands for displaying current vocabulary, current state are there.
+
+Maybe we would have lexical scoping in functions only ... no outside words (except whitelabeled maybe). And if you need global
+scope you have the standard @proc @user @app @world @users#jimney ... and see if we hit any limits.
+
+The argument would be, that if you need global-ish scopes they are very explicit (or whitelabeled) and by it introspectable
+(maybe serializable) not sprinkled around the tree of code. Separation of state and code?
+
+If we could store the environment ( @proc ), current function continuation (state and position) and a callstack of previous 
+functions with their continuations we could pause, move and continue the app? 
+
+But can we get all callstack with local states? Callstack itself would be good for debugging also, values too, but it would
+be costly to keep track of them. Maybe to be able to produce/scan them on demand (exception or freeze command).
+
+The CPS would probably help here?
