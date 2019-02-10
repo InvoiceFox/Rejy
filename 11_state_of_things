@@ -1,0 +1,29 @@
+## Go implementation
+
+I am developing opwords in go version. Didn't have time for this past week, but want to push it in week ahead.
+
+## Unmotivated Museum
+
+I was remembering some awesome developers from the past. Like cube2 developer. He made language Lobster. While reading about it, 
+it's sort of depressing. He is such an awesome developer, technically more advanced than me in any possible way. His language seems
+much more advanced, faster, ant elegant ... and it made no impact. 
+
+I rememebered some other great developers from the past ... the Pixel from Cave story. Kenta cho, ... I started looking into this
+by finding extraordinaire people that made orca (midi programming env) and some other cool projects. I should make a webpage with
+these exceptional individuals.
+
+## Ryesh - rye shell
+
+I saw and writing a basic shell (in go) is no big deal. Maybe we could write a Rejy / Rye shell that would give "power of rye" to
+the command line. It would be like repl with default command execution and cd. 
+
+Then I remembered my idea for online learning environment for kids. Where they would have @process @user @global (tuple space?) 
+and @friend. This would make your shell device independant and also enable communication with friends. Like sending messages,
+files, publishing to subscribers, subscribimg... etc. Besides you communicating via these scopes, you program could also do the 
+same very simply. It would basically make service like twitter an OS level layer. Or extend your os, to twitter like 
+communications.
+
+## Ryk - rake for data
+
+Has .ryk-init which can load functions, scripts, libs. Has functions to process JSON / XML streams also, turn text to JSON 
+objects and reverse.
