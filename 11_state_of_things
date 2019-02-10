@@ -27,3 +27,14 @@ communications.
 
 Has .ryk-init which can load functions, scripts, libs. Has functions to process JSON / XML streams also, turn text to JSON 
 objects and reverse.
+
+## But first
+
+We still have to make our little language more complete. Adding opwords is first part ... adding context avare functions would be
+next one. Not that cruicial, but would base the whole "short word API" starting point.
+
+So the plan in opwords + simple tags + simple tag sensitive functions. Then next step would be simple shell and experimenting 
+with @user for starters. Where you can set @user level values across multiple devices. Maybe adding user level hooks option. 
+First examples of mobile code...
+
+That's it for now
