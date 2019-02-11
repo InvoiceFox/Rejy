@@ -1,0 +1,36 @@
+copied from code file:
+
+
+	// look at this page on how to capture the output and pass it through:
+	// https://blog.kowalczyk.info/article/wOYk/advanced-command-execution-in-go-with-osexec.html
+	// we tested it and it worked, but changed ls to multileine outpu. This could be also used to do some ouput formatting like
+	// adding colors. Maybe other shells use similar approaches and so this should work
+	// With this, we could "move cursor in the background string and get the word under the string like we wanted to
+	// but maybe we would screw up some commands ... test it like ls | wc -l could function a little differently.
+	// or htop (which exited in previous case also) and less which worked with default stream handling
+	// maybe we could detect these special commands and let them through as they are and maybe when we are piping
+	// we wouldn't buffer output since it won't be displayed anyway
+	//
+	// OK. so we solved the ls mistery. It displays / outputs uniformly. So this could be done it seems.
+	// https://unix.stackexchange.com/questions/10421/output-from-ls-has-newlines-but-displays-on-a-single-line-why
+	//
+	// looked at the --color option and saw:
+	// Color codes are emitted only on standard output; not in pipes or redirection.
+	// We could capture and print in same case. Unless pipes or redirection. (What exactly is redirection?)
+	//
+	// if we can do this ... copy current word succsesfully at least for last command then this would be at least one good reason
+	// to do this shell outside rye stuff or json output stuff.
+	// idea ... instead of going over past commands we could also go over past outputs and reuse them via cursors
+	// idea ... alt would be like smart modified. alt up would go to previous command. alt left/right would move over words etc
+	// alt-u w would use the word , alt-l the line ... there would be some dynamic behaviout that would enable you to type commands and reuse
+	// words, lines, previous commands so you wouldn't have to keep moving up and down to combine typing and using / taking
+	// like alt-b would take cursor back to where it last took ... taking would take you down to typing
+	// maybe the command line below could show the currently selected word / selection and alt-enter would take it and execute it
+	// alt-m would select more .. more words lines etc alt-l less. or alt-n next (right) and alt-p previous (left).
+	//
+	// idea ... ability to document your procedures, undo them, comment them, save them to recipe files
+	//
+	// idea task-contexts ... pack histories in specific task-contexts. So you can switch to some context and get
+	// see recipes, get the history of commands from that task ... taks-context can be remembered by path you are in
+	// so you can also list task context related to current path or list them via paths furtner in.
+	//
