@@ -1,3 +1,5 @@
+## Ryk - very first version
+
 I made first version of ryk work. Rejy has only integers now, and this is really minimal, but it can grow from here now.
 
 Example:
@@ -28,17 +30,28 @@ This is nothing special. Let's try to parse csv (name, surname, age) to json obj
 
     cat people.csv | ./ryk "start { j: json-array } { o: json-obj , set o 'name _1 , set o 'surname _2 , set o 'birth now/year - age , add j o } end { j }"
     
-The simple manual way above. The , as a expression guard looks really usefull and nice. Otherwise expressions above would be very hard to comprehend and two spaces don't help really taht much.
+The simple manual way above. The , as a expression guard looks really usefull and nice. Otherwise expressions above would be very hard to comprehend and two spaces don't help much.
 
-    cat people.csv | ./ryk "start { j: json-array } { add j json-obj-from csv-line _ '; [ 'name 'surname <birth> { now/year - _3 } ] } end { j }"
+## Making it nicer
 
-more declarative, but also more complex, but it's absurdly not much shorter and too much of hidden nesting.
+    cat people.csv | ./ryk "
+    start { j: json-array } 
+    { add j json-obj-from csv-line _ '; [ 'name 'surname <birth> { now/year - _3 } ] } 
+    end { j }"
 
-    cat people.csv | ./ryk "start { j: json-array } { add j (json-obj-from (csv-line _ ',) [ 'name 'surname <birth> { now/year - _3 } ]) } end { j }"
+more structured and declarative, but also more complex. The main problem I see in this code is hidden nesting which makes it quite incomprehensable.
+
+    cat people.csv | ./ryk "
+    start { j: json-array } {
+    add j (json-obj-from (csv-line _ ',) [ 'name 'surname <birth> { now/year - _3 } ]) } 
+    end { j }"
 
 opwords probably wouldn't help much with clarity here... and because of left to right execution this wouldn't work. 
 
-    cat people.csv | ./ryk "start { j: json-array } { j *add (_ *csv-line ',) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ]) } end { j }"
+    cat people.csv | ./ryk "
+    start { j: json-array } 
+    { j *add (_ *csv-line ',) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ]) } 
+    end { j }"
 
 Does turning of arguments help us any? Let's say that ** switches the first two arguments around
 
