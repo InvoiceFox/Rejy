@@ -28,11 +28,12 @@ I am thinking if in-context words will help with tearsnes of code ... and how we
 
 This is nothing special. Let's try to parse csv (name, surname, age) to json objects { name: surname: birth: }
 
-    cat people.csv | ./ryk "start { j: json-array } { o: json-obj , set o 'name _1 , set o 'surname _2 , set o 'birth now/year - age , add j o } end { j }"
+    cat people.csv | ./ryk "
+    start { j: json-array } 
+    { o: json-obj , set o 'name _1 , set o 'surname _2 , set o 'birth now/year - age , add j o } 
+    end { j }"
     
 The simple manual way above. The , as a expression guard looks really usefull and nice. Otherwise expressions above would be very hard to comprehend and two spaces don't help much.
-
-## Making it nicer
 
     cat people.csv | ./ryk "
     start { j: json-array } 
@@ -41,33 +42,37 @@ The simple manual way above. The , as a expression guard looks really usefull an
 
 more structured and declarative, but also more complex. The main problem I see in this code is hidden nesting which makes it quite incomprehensable.
 
-    cat people.csv | ./ryk "
-    start { j: json-array } {
-    add j (json-obj-from (csv-line _ ',) [ 'name 'surname <birth> { now/year - _3 } ]) } 
-    end { j }"
+## Making it nicer
 
-opwords probably wouldn't help much with clarity here... and because of left to right execution this wouldn't work. 
+let's add grouping for clarity _visible but verbose_
 
     cat people.csv | ./ryk "
     start { j: json-array } 
-    { j *add (_ *csv-line ',) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ]) } 
+    { add j ( json-obj-from ( csv-line _ ', ) [ 'name 'surname <birth> { now/year - _3 } ] ) } 
     end { j }"
 
-Does turning of arguments help us any? Let's say that ** switches the first two arguments around
+opwords probably wouldn't help much with clarity here... and because of left to right execution this wouldn't work. _just weird_
+
+    cat people.csv | ./ryk "
+    start { j: json-array } 
+    { j *add ( _ *csv-line ', ) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ] } 
+    end { j }"
+
+Does turning of arguments help us any? Let's say that ** switches the first two arguments around _no_
 
     cat people.csv | ./ryk "
       start { j: json-array } 
-      { (_ *csv-line ',) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ] **add j   } 
+      { (_ *csv-line ',) *json-obj-from [ 'name 'surname <birth> { now/year - _3 } ] **add j } 
       end { j }"
       
-Would stack help?
+Would stack help? _no_
       
     cat people.csv | ./ryk "
      start { j: json-array } 
      { csv-line _ '; |push , json-obj-from pop [ 'name 'surname <birth> { now/year - _3 } |push , j +add pop  ] } 
      end { j }"
 
-Temporary variables?
+Temporary variables? _better than stack_
      
      cat people.csv | ./ryk "
       start { j: json-array } 
@@ -107,4 +112,28 @@ words and opwords. It must of course still dispatch on the initially fist argume
     join3* "nk" "ja" "o" |asserts "janko"
     join3** "nk" "o" "ja" |asserts "janko"
     
+so opwords wirth arg switchers can be usefull.
+
+## Manipulating functions
+
+### removing named context in functions
+
+I don't see a particular problem, why we couldn't at runtime change function so that it uses a stack instead of context _map_ or a simple small array for local words/variables. These both should be more optimal. With regards to stack we could just have one stack, pop values on and clean them if needed when function exits. Or we could leave things (or just result) on if it makes sense? For functions with small numer of local variables this should be faster than map.
+
+### composing functions
+
+I also don't see why we couldn't take two functions and compose them together into a new function. But not just where they represent one flow of arguments (via curry) but into a new function that can take multiple missing arguments from composed ones.
+
+    send-email: fn [ addr subj cont ] { if-addr addr [ send-eml addr join subj cont } } 
+    get-user-email: fn [ id ] { db@proc |sql "select addr from user where id = ?" { id } |first-opt }
+    
+    // 
+    send-email-to-user: compose-fn { get-user-email <id> , send-email _ <subj> <cont> }
+    
+    // we get a new function at source level (not linked to those two)
+    source? send-email-to-user
+    send-email-to-user [ id subj cont ] {
+        db@proc |sql "select addr from user where id = ?" { id } |first-opt :f0001
+        if-addr f0001 [ send-eml f0001 join subj cont  
+    }
     
