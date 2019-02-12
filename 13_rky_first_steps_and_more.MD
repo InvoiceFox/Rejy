@@ -176,3 +176,47 @@ avaliable in local lontext?
     // compose them.
     
     // IDK ? :) ... it would be interesting to make a proof of concept for these ...                
+
+## JSON processing
+
+There are some go json (streaming) libraries, but no cake. The closes comes this one, which could be taken as base to 
+build upon: https://github.com/buger/jsonparser
+
+or the default one: 
+https://stackoverflow.com/questions/31794355/stream-large-json
+
+    func main() {
+        var val interface{}
+
+        decoder := json.NewDecoder(bytes.NewBuffer([]byte(sourcedoc)))
+        decoder.Token() // consumes the first "["
+
+        decoder.Decode(&val)
+        fmt.Printf("First: %#v\n", val)
+        decoder.Decode(&val)
+        fmt.Printf("Second: %#v\n", val)
+        for k := range val.(map[string]interface{}) {
+	        fmt.Println(k)
+	    }
+        fmt.Println(val.(map[string]interface{})["colors"].([]interface{})[0])
+        decoder.Token() // consumes the last "]"
+    }
+
+Some examples of streaming api-s dsl-s: 
+https://www.npmjs.com/package/JSONStream ... event/sax like somewhat
+http://oboejs.com/examples#transforming-json-while-it-is-streaming ... string based dialect
+http://hackage.haskell.org/package/json-stream ... haskel, event internal dialect like
+https://stedolan.github.io/jq/tutorial/
+
+### Ideas
+
+    ryk -j '{ in 'data all 'people { 'p puts get p 'name } }' // print all names in { data: { people: [ { name: "jim" } .. }
+    
+    ryk -j '{ in 'data all 'people { 'p puts join_ get p 'name get p 'surname } }'
+    
+    ryk -j '{ ( cnt: 0 ) in 'data all 'people get 'name ( 'n make-obj { person: n, id: cnt cnt: inc cnt } )' ...
+    
+    try further later ...
+    
+    
+ 
