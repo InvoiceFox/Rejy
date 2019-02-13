@@ -145,5 +145,120 @@ Ok so our process is
  * filter array (filter)
  * reshape objects (map)
  * aggrefate objects (reduce)
+ 
+examples:
 
-      '{ where 'name starts-with "A" }'
+    { where 'name starts-with "A" }
+    
+on each object test expression, if it passes the condition print it
+
+    { where 'name starts-with "A" { print uppercase 'name } }
+    
+on each object test expression, if it passes the condition then the block is called with current object the lit word in this
+context automatically gets the property of the current object. What about not requiring a block and all words are infix?
+
+    { where 'name starts-with "A" 'name uppercase print } }
+    
+where takes one opword expression "'name start-with "A"" after expression is exausted it either navigates or executes in infix
+fashion. 'name sets string as current node. calls uppercase with that arg and sets new string as current node. print prints it.
+
+lets try more complex expressions:
+
+    { where 'children length? greater? 2 pass { 'name 'surname } }
+    
+ PROBLEM: but since all words are opword how does the program know where the expression ends ... it can't
+ 
+ it could use a litword as a breaker, a comma, or a block.
+ 
+    { where 'name starts-with "A" 'name uppercase print } }
+    { where 'children length? greater? 2 'node pass { 'name 'surname } } // node is a predefined keyword - smell :/
+    
+    { where 'name starts-with "A" , 'name uppercase print } }
+    { where 'children length? greater? 2 , pass { 'name 'surname } }     // looks ok, but we didn't yet even implement 
+                                                                         // expression breaker "," so we can't know for 100% 
+                                                                         // if it will be in program and as what
+    
+    { count: 0 } { where 'children length? greater? 2 , { count: inc count } nil } { count } // don't return anything per object, just count at the end
+    
+    
+    { where 'name starts-with "A" { 'name uppercase print } } }
+    { where 'children length? greater? 2 { pass { 'name 'surname } } } // overloading blocks
+
+Expression terminator seems like the best option, lets walk with this further. What do we return /stream further.. it can be JSON. If value is returned it's streamed as node of JSON array further. If we explicitly print it, we print exactly that.
+
+    { where 'children length? greater? 2 , pass { 'name 'surname } } // prints array with { name: surname: } objects
+    
+    { where 'children length? greater? 2 , 'name jo_in 'surname puts // prints "name surname"
+    
+nil prints nothing. block gets executed like regural code with lit-words still giving current object's properties
+    
+    { count: 0 } { where 'children length? greater? 2 , { count: count inc } nil } { count }
+
+Do we have to make a special evaluator, or could we turn this into normal tree of code, that gets called on each object?
+This is the next question. Or could this simply be special with dialect / execution model?
+
+    with person {
+      when 'name equals "Janko" ,
+      'name print 'surname puts
+    }
+
+    with person {
+      when 'name equals "Janko" and 'age > 40 ,
+      inspect
+    }
+    
+    with person {
+      'name uppercase print
+      'surname uppercase puts
+    }
+
+NEW THINGS: 
+ * "when" is like if, but it just quits the execution of current block. This is a little weird, but it shows elegant 
+ at least in cases above. It could be done as builting somehow probably.
+ * "with" here provides all lit words with (get obj 'lit-word), which could probably done as a reader function .. but in this
+ case we don't know if any of the words are not function but lit-words too. We will think about it later.
+ * all words in this context are used as opwords ... is this bound to with, or could we use with with prefix words sometimes and 
+ this would be usable in other cases too (most probably). What if we make the .{ } block modifyer, which this particular
+ would at read time or runtime change the type of all function words in block.
+
+WEIRD THOUGHT EXP. opwords have a conflict because they function only as functions but have no meaning as variables, but words that they denote can also be variables. Here we can't know at reader time if something refs a function or value or litword.
+
+functions also have by our ideas different scoping rules than variables (need to be explicitly imported). 
+
+So it would make by far the sense that functions would use different types of words than variables.... but but but...
+
+    with person {
+      when 'name equals "Janko" ,
+      'name print 'surname puts
+    }
+    
+    with person {
+      when name equals "Janko" ,
+      name print surname puts
+    }
+    
+Hm ... it could be argued, that the first is more readable than the second :/
+
+I found another problem. When and where upthere are not really opwords ... so not functions inthere are opwords which 
+I am not yet sure how to solve with elegance and unifying approach.
+
+It's cool, but do we need infix here really?
+
+    with person {
+      when equals? 'name "Janko" ,
+      print 'name puts 'surname
+    }
+    
+    { when starts-with 'name "A" , print uppercase 'name } }
+    { when greater? length? 'children 2 , pass { 'name 'surname } }
+    
+This, especially last example is much worse ... we want infix ... do we move all to infix or infix by default?
+
+    with person .{
+      when| name equals "Janko" ,
+      name print , surname puts
+    }
+    
+Maybe we could have infix and prefix blocks and |word or .word forces infix and word. word| forces prefix.
+
+    
