@@ -261,4 +261,6 @@ This, especially last example is much worse ... we want infix ... do we move all
     
 Maybe we could have infix and prefix blocks and |word or .word forces infix and word. word| forces prefix.
 
-    
+IDEA: what if word that doesn't have values on the left, that is at the start of block or right after expression terminator.
+
+
