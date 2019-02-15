@@ -263,4 +263,38 @@ Maybe we could have infix and prefix blocks and |word or .word forces infix and 
 
 IDEA: what if word that doesn't have values on the left, that is at the start of block or right after expression terminator.
 
+## Solidification
+
+I've implemented opwords, pipewords and expression guards yesterday. https://twitter.com/refaktor/status/1096083646019235840
+
+Now that I look at examples above. We ditch .{ for now ... we also ditch word| for now. 
+
+"with" function could change all regular words except first if there is one (up to expression guard) to pipewords and before all first litwords insert " 'name " " person |get 'name " . If there are consequetive litwords they should take previous object so it
+just adds " |get 'first_name ".
+
+So 
+
+    { 'person 'name 'first_name uppercase } 
+    // would become =>
+    { tmpvar |get 'person |get 'name |get 'first_name |uppercase }
+
+more complex scenario
+
+    { 'person 'age > 30 and 'person 'name starts-with "a" .uppercase } 
+    // would become => 
+    { tmp |get 'person |get 'age > 30 |and tmp |get 'person |get 'name |start-with "a" .uppercase }
+    
+Not sure if all the leanings are correct here .. we should test it when possible. 
+
+What prefix code would do the same?
+
+    and > get get tmp 'person 'age 30  starts-with get get tmp 'person 'name uppercase "a"
+    
+This isn't good. Some parens would make it clear, but not really nice either:
+
+    (and (> (get (get tmp 'person) 'age) 30)  (starts-with (get (get tmp 'person) 'name) (uppercase "a")))
+    
+Rebol has infix operators like > and all so it would be 2 cents better:
+
+    all [ (get (get tmp 'person) 'age) > 30  starts-with (get (get tmp 'person) 'name) (uppercase "a") ]
 
