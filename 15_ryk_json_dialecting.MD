@@ -298,3 +298,14 @@ Rebol has infix operators like > and all so it would be 2 cents better:
 
     all [ (get (get tmp 'person) 'age) > 30  starts-with (get (get tmp 'person) 'name) (uppercase "a") ]
 
+## Next ...
+
+I've made some quite big language design decisions this round. To soak this all in, see more examples, more implementation
+before loading new design decision on top of it (like when (reader func ... or dual func? first time run (init) inited?) and tags, context words, function scope ... I should do something non designish. That would be adding support for strings and adding
+some practical builtins for making ryk examples possible.
+
+I could try to implement and test the json streaming reader inside ryk / stdio context, to see if it all works and maybe manipulate it a little. Maybe I get some new ideas along the way.
+
+## Observation
+
+Looking at our example, extended above ... the pipes in pipewords are a little too noisy. : would be better and symetric to ., but are already used for assignment, which is totally unrelated context and isn't compatible with this meaning.              
