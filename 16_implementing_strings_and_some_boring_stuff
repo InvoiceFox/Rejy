@@ -1,4 +1,0 @@
-# Today
-
-... I would like to implement strings and some string builtins. Nothings special, but we move lang forward
-strings already seem to support unicode and newlines. Later we add """ for newline capable string """
