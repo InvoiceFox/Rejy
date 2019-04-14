@@ -94,5 +94,22 @@ I THINK YES.
     is special in composing a forward passing data flow.
     
           
-    
-    
+          
+          
+## So what's the plan now
+
+First figure out, if we lost any speed due to last changes (currying). 
+
+Then make another branch and first add kind mapping logic.
+
+Add another native and another user function that uses the kind information to dispatch. Let's still leave normal functions and normal natives there. Maybe we will neeed them still or more than we know. We can try converting core functions to dispatching ones, but normal can be a fallback still.
+
+Make the kind mapper for the top .. that converst kinds to integers and with them loads the script. Kind url can now just be string at this point. Try to make some simple natives work and measure if we lost speed with it. 
+
+Also make user functions with dispatch work and measure for speed.
+
+If we have this working then we implement more language features. Like the validation dialect, the block autoargument option { .print } etc. Add kinds to all native types, etc ... convert functions.
+
+
+
+
