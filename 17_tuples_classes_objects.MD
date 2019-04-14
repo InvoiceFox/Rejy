@@ -1,4 +1,6 @@
-#So what is the main idea.
+# Tuples (objects / classes like things)
+
+## So what is the main idea.
 
 * We want to have composed objects (from multiple other objects)
 * We want that a validation dialect can be applied to them
@@ -19,6 +21,22 @@
 * all functions should dispatch on kind of first arg so all native words can be used in other contexts (kinds), like add, first, +,  etc
 * this means that there is one global registry of functions with kinds
 
-#
+### example of unkinded / adhoc validation
 
-    get-data #> { email: required email username: required one-word } 
+    load-data user-id #> { email: required email username: required one-word } .either { .save %user.ryet } { .print }
+    
+#### what is happening here
+
+    #> is opword ( <obj> _#> <validation rules> , return validated object or validation-error object )
+    
+    { ... } are validation rules
+    
+    .either are basically two functions one is bound to kind org.ryelang/validated-tuple another is to org.ryelang/validation-errors
+    first does first block, second just the second block. They set it's first argument as an entry (left) value. First turns it to 
+    org.ryelang/tuple
+    
+    .save is bound to org.ryelang/tuple and molds and saves the tuple
+    .print is bound to org.ryelang/validation-errors and formats and prints them
+    
+    #> with first arg kind block would take just block
+    #> with first arg kind #tag would take tag and block. If validation passes 
