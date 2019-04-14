@@ -26,7 +26,6 @@
     load-data user-id #> { email: required email username: required one-word } .either { .save %user.ryet } { .print }
     
 #### what is happening here
-
     #> is opword ( <obj> _#> <validation rules> , return validated object or validation-error object )
     
     { ... } are validation rules
@@ -72,3 +71,22 @@ Scripts / libraries that use those kinds still have to be loaded localy. Each sc
 SOLUTION?
 Since these are universal identifiers, maybe interpreter can just load scripts directly and at each define mapping to current env integers for each unique kind, and at the same time replace all string KIND references to that specific integer, so at runtime there is no need to map local names to uri-kinds and know the locality .. it's all done in sequential fashion during the loading of scripts.
 I THINK YES.
+
+
+## Defininf local kinds
+
+    def-kind #user { username: required string one-word name: string }
+    
+    kind #person { full-name: string { .capitalize-words } birth: date }
+    conversion-to #person #user { full-name: :name birth: 1970 } // IDEA: if we pass birth: _ it would make a function taking that arg
+    
+    fn-s #user 'print { .get 'name |join* "Username: " .print }
+    fn-s #person 'print { .get 'name |join* "Name: " .print }
+    
+    load-data >> #user .pass { .print } >> #person .print
+    
+    // pass executes block vith value as left and the block returns the same value
+    Username: jimmycom
+    Name: Jimmy Comute
+    
+    
