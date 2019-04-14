@@ -90,3 +90,9 @@ I THINK YES.
     Name: Jimmy Comute
     
     
+    Star at the end of op-word or pipe-word makes second arg first, two stars would make third arg first. This makes sense, as first arg
+    is special in composing a forward passing data flow.
+    
+          
+    
+    
