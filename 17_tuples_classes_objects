@@ -1,0 +1,24 @@
+#So what is the main idea.
+
+* We want to have composed objects (from multiple other objects)
+* We want that a validation dialect can be applied to them
+
+**kindered tuples**
+
+* we want these objects to be set a kind
+* we want to define a validation rules for each kind
+* we want to be able to define conversions for kinds (from = to)
+
+**everything has kind**
+
+* also native singular object types should have a predefined kind (number, block ...)
+* validation rules define the kind of tuple part and can additionally define requred/optional X , custom filters (one-word, email, ...)
+  and custom calculation () and custom check ()
+
+**we dispatch on kind of first argument**
+* all functions should dispatch on kind of first arg so all native words can be used in other contexts (kinds), like add, first, +,  etc
+* this means that there is one global registry of functions with kinds
+
+#
+
+get-data #> { email: required email username: required one-word } 
