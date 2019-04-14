@@ -43,3 +43,27 @@
     PROBLEM: if we want either dispatch to general tuple, then #> can't return some kinded tuple.... we could have either-valid that 
     takes any tuple or validation-error or either and some other trick .. like parent kind, secondary kind, ... multiple kinds? 
     Depending on how these options behave in other cases or what they provide. We will decide this later with more examples.
+    
+## Kinds, implementation
+
+Native kinds, preloaded by default are org.ryelang.core/num, org.ryelang.core/string, org.ryelang.core/block  etc.
+
+We could define some other kinds, composites org.ryelang/person org.ryelang/user org.ryelang.email(content), etc ...
+
+Everybody can define their own kinds and publish them online. Kinds have an url, validation rules, and optional converters.
+
+Core kinds are preloaded all others must be defined, and mapped to local words:
+
+    define-kinds {
+      com.refaktor/v003 {
+        user  // is named the same
+        user-picture #pic
+      }
+      core/v1 {
+        email
+        iso-date #date
+        http-header
+      }
+    }
+
+Scripts / libraries that use those kinds still have to be loaded localy. Each script defiens it's own kinds
