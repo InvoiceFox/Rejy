@@ -40,3 +40,6 @@
     
     #> with first arg kind block would take just block
     #> with first arg kind #tag would take tag and block. If validation passes 
+    PROBLEM: if we want either dispatch to general tuple, then #> can't return some kinded tuple.... we could have either-valid that 
+    takes any tuple or validation-error or either and some other trick .. like parent kind, secondary kind, ... multiple kinds? 
+    Depending on how these options behave in other cases or what they provide. We will decide this later with more examples.
