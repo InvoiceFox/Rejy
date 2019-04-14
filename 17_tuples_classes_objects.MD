@@ -75,7 +75,7 @@ I THINK YES.
 
 ## Defininf local kinds
 
-    def-kind #user { username: required string one-word name: string age: integer }
+    kind #user { username: required string one-word name: string age: integer }
     
     kind #person { full-name: string { .capitalize-words } birth: date }
     conversion #user #person { name :full-name { now .year - age } :birth } // _ for asking a argument at conv time? :IDEA
