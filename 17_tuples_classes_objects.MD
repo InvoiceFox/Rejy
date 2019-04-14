@@ -75,10 +75,10 @@ I THINK YES.
 
 ## Defininf local kinds
 
-    def-kind #user { username: required string one-word name: string }
+    def-kind #user { username: required string one-word name: string age: integer }
     
     kind #person { full-name: string { .capitalize-words } birth: date }
-    conversion-to #person #user { full-name: :name birth: 1970 } // IDEA: if we pass birth: _ it would make a function taking that arg
+    conversion #user #person { name :full-name { now .year - age } :birth } // _ for asking a argument at conv time? :IDEA
     
     fn-s #user 'print { .get 'name |join* "Username: " .print }
     fn-s #person 'print { .get 'name |join* "Name: " .print }
