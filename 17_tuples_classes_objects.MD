@@ -66,4 +66,9 @@ Core kinds are preloaded all others must be defined, and mapped to local words:
       }
     }
 
-Scripts / libraries that use those kinds still have to be loaded localy. Each script defiens it's own kinds
+PROBLEM:
+Scripts / libraries that use those kinds still have to be loaded localy. Each script defiens it's own kinds ... so the interpreter needs to know in which script (kind mapping) (similar to namespace) current function is executing ... This is not what we planned for this stage.
+
+SOLUTION?
+Since these are universal identifiers, maybe interpreter can just load scripts directly and at each define mapping to current env integers for each unique kind, and at the same time replace all string KIND references to that specific integer, so at runtime there is no need to map local names to uri-kinds and know the locality .. it's all done in sequential fashion during the loading of scripts.
+I THINK YES.
