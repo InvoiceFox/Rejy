@@ -79,10 +79,14 @@ I THINK YES.
     kind #person { full-name: string { .capitalize-words } birth: date }
     conversion #user #person { name :full-name { now .year - age } :birth } // _ for asking a argument at conv time? :IDEA
     
-    fn-s #user 'print { .get 'name |join* "Username: " .print }
-    fn-s #person 'print { .get 'name |join* "Name: " .print }
+    fns #user 'print { .get 'name |join* "Username: " .print }
+    fns #person 'print { .get 'name |join* "Name: " .print }
     
     load-data >> #user .pass { .print } >> #person .print
+    
+    // or
+    
+    load-data >user> .pass { .print } >person> .print
     
     // pass executes block vith value as left and the block returns the same value
     Username: jimmycom
