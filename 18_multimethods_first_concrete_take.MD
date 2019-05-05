@@ -36,7 +36,12 @@ Let's say we have a new type of word - tagword - #tagword. The multiword namespa
 
 Native types statically return their tagword indexes which are predefined in code
 
-add 1 2 
+      add 1 2 
+
+ * add is a word in multi dictionary
+ * first value is retrieved and it's tag is retrieved
+ * we look up a function by it's tag and word in multi[int][int]
+ * we collect the other needed arguments and run a builtin
 
 getTag of 1 returns index for #integer
 
