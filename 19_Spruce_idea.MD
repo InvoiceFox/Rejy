@@ -207,3 +207,22 @@ maybe blocks of code with arguments in general could be just these in Rye too? .
 	{a,b add a b }
 	{pers:person .get 'name .join* "Hi, I'm " }
 
+Then the composition could get:
+
+	create:
+	 person
+	  {It:object:new}
+	  with *
+	   name
+	    {name:string .set It}
+		 *
+	   surname
+	    {surname:string .set It}
+		 *
+	   age
+	    {age:number .set It}
+	 *
+	 
+Where name:string would create some selfavare wariable, that knows it's own name and value. so set would accept name and value from it and use the name to set the filed name in object It. Hm ... interesting weird ideas are just lying around it seems. If they are really usefull is another question.
+
+
